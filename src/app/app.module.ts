@@ -8,7 +8,10 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatIconModule, MatInputModule, MatProgressBarModule} from '@angular/material';
+import {
+  MatButtonModule, MatIconModule, MatInputModule, MatProgressBarModule,
+  MatToolbarModule
+} from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
@@ -22,12 +25,13 @@ import {HttpClientModule} from '@angular/common/http';
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
+    HttpClientModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
     MatProgressBarModule,
-    AppRoutingModule,
-    HttpClientModule
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
