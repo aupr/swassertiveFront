@@ -1,0 +1,93 @@
+<app-navigation></app-navigation>
+
+<mat-tab-group *ngIf="gs.userData">
+  <mat-tab label="App List">
+
+    <mat-card class="apps-card">
+      <mat-card-header>
+        <mat-card-title>User apps list</mat-card-title>
+        <mat-card-subtitle>Useful applications as per user role.</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+
+          <mat-list-item *ngFor="let app of gs.userData.appList">
+            <mat-icon mat-list-icon>touch_app</mat-icon>
+            <a href="#" mat-line>{{app.appName}}</a>
+            <p mat-line> {{app.remark}} </p>
+          </mat-list-item>
+          <mat-list-item *ngFor="let app of gs.userData.appList">
+            <mat-icon mat-list-icon>folder</mat-icon>
+            <a href="#" mat-line>{{app.appName}}</a>
+            <p mat-line> {{app.remark}} </p>
+          </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>touch_app</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>touch_app</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>touch_app</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>touch_app</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>touch_app</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item><mat-list-item *ngFor="let app of gs.userData.appList">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <a href="#" mat-line>{{app.appName}}</a>
+          <p mat-line> {{app.remark}} </p>
+        </mat-list-item>
+
+        </mat-list>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+      </mat-card-actions>
+    </mat-card>
+
+  </mat-tab>
+  <mat-tab label="Options">
+
+  </mat-tab>
+</mat-tab-group>

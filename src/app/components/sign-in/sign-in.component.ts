@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../auth.service';
-<<<<<<< HEAD
-=======
+import {Component, OnInit, Renderer2} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
 import {map} from 'rxjs/internal/operators';
 import {Observable} from 'rxjs/index';
->>>>>>> ff6c2a85ad139a1429d5474801e21443ee0d5f96
 import {Router} from '@angular/router';
+import {GlobalService} from '../../services/global.service';
 
-@Component ({
+@Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
@@ -23,27 +21,24 @@ export class SignInComponent implements OnInit {
   };
 
   constructor(
+    private gs: GlobalService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit() {
+    this.gs.userData = null;
+
+    const element1 = this.renderer.selectRootElement('#input_1');
+    setTimeout(() => element1.focus(), 200);
   }
 
-<<<<<<< HEAD
-  login(pdt: any): void {
-    this.authService.logIn(pdt).subscribe(result => {
-      this.isLoading = true;
-      if (result.status === 'success') {
-        console.log('Authentic User');
-        this.router.navigate(['/home']);
-      } else {
-        this.isLoading = false;
-        console.log('User is not authenticated');
-      }
-    }, failResult => {
-      console.log(failResult);
-=======
+  focusInput2() {
+    const element2 = this.renderer.selectRootElement('#input_2');
+    setTimeout(() => element2.focus(), 0);
+  }
+
   signIn(pdt: any): void {
     this.isLoading = true;
     this.authService.signIn(pdt).subscribe(res => {
@@ -53,7 +48,6 @@ export class SignInComponent implements OnInit {
         this.isLoading = false;
         console.error('Sign in failed!');
       }
->>>>>>> ff6c2a85ad139a1429d5474801e21443ee0d5f96
     });
   }
 

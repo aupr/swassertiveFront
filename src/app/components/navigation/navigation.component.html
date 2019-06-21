@@ -1,0 +1,17 @@
+<mat-toolbar color="primary" class="navbar">
+  <div>SW-Assertive</div>
+  <div *ngIf="navBarData">
+    <button mat-flat-button color="primary"><mat-icon>home</mat-icon> Home</button>
+    <button mat-flat-button color="primary"><mat-icon>account_box</mat-icon> {{navBarData.user.fullName}}</button>
+    <button mat-flat-button color="primary" (click)="signOut()"><mat-icon>exit_to_app</mat-icon> Sign out</button>
+
+    <button mat-icon-button [mat-menu-trigger-for]="beforeMenu"><mat-icon>apps</mat-icon></button>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <a href="{{app.url}}" mat-menu-item *ngFor="let app of navBarData.appList"
+      matTooltip="{{app.remark}}" [matTooltipPosition]="'before'">
+        {{app.appName}}
+      </a>
+    </mat-menu>
+
+  </div>
+</mat-toolbar>
