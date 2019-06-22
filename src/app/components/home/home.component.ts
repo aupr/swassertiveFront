@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {GlobalService} from '../../services/global.service';
+import {Router} from '@angular/router';
 
 // @ts-ignore
 @Component({
@@ -10,7 +11,8 @@ import {GlobalService} from '../../services/global.service';
 export class HomeComponent implements OnInit {
 
   constructor(
-    private gs: GlobalService
+    private gs: GlobalService,
+    private router: Router
   ) { }
 
   ngOnInit() {

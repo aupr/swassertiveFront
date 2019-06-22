@@ -14,10 +14,18 @@ import {GlobalService} from '../../services/global.service';
 export class SignInComponent implements OnInit {
   hide = true;
   isLoading = false;
+  signInFailed = false;
 
   loginData = {
     username: '',
     password: ''
+  };
+
+  matcher = {
+    isErrorState: () => {
+      return this.signInFailed; // return boolean status value
+    },
+    errorMessage: 'Sign in failed due to invalid input!'
   };
 
   constructor(
@@ -46,6 +54,7 @@ export class SignInComponent implements OnInit {
         this.router.navigate(['/home']);
       } else {
         this.isLoading = false;
+        this.signInFailed = true;
         console.error('Sign in failed!');
       }
     });

@@ -15,19 +15,23 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatProgressBarModule,
+  MatProgressBarModule, MatTableModule,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
+import { ManageUserComponent } from './components/manage-user/manage-user.component';
+import { BadRequestComponent } from './components/bad-request/bad-request.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SignInComponent,
-    NavigationComponent
+    NavigationComponent,
+    ManageUserComponent,
+    BadRequestComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,8 @@ import {HttpClientModule} from '@angular/common/http';
     MatListModule,
     MatDividerModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,19 +1,25 @@
 <mat-progress-bar mode="query" *ngIf="isLoading"></mat-progress-bar>
-<div [ngClass]="{disabledDiv: isLoading}" style="width: 400px; margin: 100px auto 0 auto; box-sizing: border-box; background-color: white; border: 1px solid #999999;">
-  <div style="background-color: #3f51b5; color: #ffffff; box-sizing: border-box; height: 40px; line-height: 40px; vertical-align: center; padding-left: 10px; font-weight: 500;">Sign in</div>
-  <div style="margin: 20px auto 20px auto; width: 350px;">
-    <mat-form-field appearance="outline" style="width: 100%;">
+
+<div [ngClass]="{disabledDiv: isLoading}" class="signInBlock">
+
+  <div class="signInHeader">Sign in</div>
+
+  <div class="signInContainer">
+
+    <mat-form-field appearance="outline">
       <mat-label>Username</mat-label>
-      <input matInput id="input_1" (keyup.enter)="focusInput2()" [(ngModel)]="loginData.username" placeholder="Enter your username">
+      <input matInput id="input_1" [errorStateMatcher]="matcher" (keyup.enter)="focusInput2()" [(ngModel)]="loginData.username" placeholder="Enter your username" autocomplete="off">
       <mat-icon matSuffix>perm_identity</mat-icon>
       <mat-hint></mat-hint>
+      <mat-error>{{matcher.errorMessage}}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width: 100%;">
       <mat-label>Password</mat-label>
-      <input matInput id="input_2" (keyup.enter)="signIn(loginData)" [(ngModel)]="loginData.password" placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+      <input matInput id="input_2" [errorStateMatcher]="matcher" (keyup.enter)="signIn(loginData)" [(ngModel)]="loginData.password" placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
       <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      <mat-hint></mat-hint>
+      <!--<mat-hint></mat-hint>-->
+      <mat-error>{{matcher.errorMessage}}</mat-error>
     </mat-form-field>
 
     <button mat-button style="border-radius: 0;">About credential</button>

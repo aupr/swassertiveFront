@@ -3,11 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import {HomeComponent} from './components/home/home.component';
 import {SignInComponent} from './components/sign-in/sign-in.component';
 import {AuthGuard} from './auth.guard';
+import {ManageUserComponent} from './components/manage-user/manage-user.component';
+import {BadRequestComponent} from './components/bad-request/bad-request.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'signin', component: SignInComponent }
+  { path: 'manage/user', component: ManageUserComponent, canActivate: [AuthGuard] },
+  { path: 'signin', component: SignInComponent },
+  { path: 'badrequest', component: BadRequestComponent }
 ];
 
 @NgModule({
