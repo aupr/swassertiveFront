@@ -14,8 +14,8 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatMenuModule,
-  MatProgressBarModule, MatTableModule,
+  MatMenuModule, MatPaginatorModule,
+  MatProgressBarModule, MatSortModule, MatTableModule,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule
@@ -50,7 +50,9 @@ import { BadRequestComponent } from './components/bad-request/bad-request.compon
     MatDividerModule,
     MatTabsModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

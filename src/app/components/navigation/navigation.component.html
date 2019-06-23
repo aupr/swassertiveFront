@@ -1,7 +1,8 @@
 <mat-toolbar color="primary" class="navbar">
-  <div>SW-Assertive</div>
+  <!--<div>SW-Assertive</div>-->
+  <div>User & App Shell</div>
   <div *ngIf="navBarData">
-    <button mat-flat-button color="primary"><mat-icon>home</mat-icon> Home</button>
+    <button mat-flat-button (click)="router.navigate(['/home'])" color="primary"><mat-icon>home</mat-icon> Home</button>
     <button mat-flat-button color="primary"><mat-icon>account_box</mat-icon> {{navBarData.user.fullName}}</button>
     <button mat-flat-button color="primary" (click)="signOut()"><mat-icon>exit_to_app</mat-icon> Sign out</button>
 
