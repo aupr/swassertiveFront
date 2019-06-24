@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {DataService} from '../../services/data.service';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource, PageEvent} from '@angular/material';
+import {DialogUserViewComponent} from '../dialog-user-view/dialog-user-view.component';
 
 export interface User {
   userId: number;
@@ -20,13 +21,15 @@ export interface User {
   styleUrls: ['./manage-user.component.scss']
 })
 export class ManageUserComponent implements OnInit {
+  searchKey: string;
   tableData: any;
   displayedColumns: string[] = ['name', 'username', 'designation', 'duration', 'bloodGroup', 'userLevel', 'status', 'action'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -77,5 +80,33 @@ export class ManageUserComponent implements OnInit {
       this.tableData.paginator.firstPage();
     }
   }
+
+  syncPrimaryPaginator(event: PageEvent) {
+    this.paginator.pageIndex = event.pageIndex;
+    this.paginator.pageSize = event.pageSize;
+    this.paginator.page.emit(event);
+  }
+
+  onSearchClear() {
+    this.searchKey = '';
+    this.userTableFilter(this.searchKey);
+  }
+
+  openDialog(userData: any): void {
+    console.log(userData)
+    const dialogRef = this.dialog.open(DialogUserViewComponent, {
+      width: '250px',
+      panelClass: 'userViewModal',
+      data: userData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result) {
+        console.log(result);
+      }
+    });
+  }
+
 
 }

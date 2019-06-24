@@ -9,7 +9,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatCardModule,
+  MatButtonModule, MatCardModule, MatDialogModule,
   MatDividerModule,
   MatIconModule,
   MatInputModule,
@@ -23,6 +23,8 @@ import {
 import {HttpClientModule} from '@angular/common/http';
 import { ManageUserComponent } from './components/manage-user/manage-user.component';
 import { BadRequestComponent } from './components/bad-request/bad-request.component';
+import { ManageAppComponent } from './components/manage-app/manage-app.component';
+import { DialogUserViewComponent } from './components/dialog-user-view/dialog-user-view.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,12 @@ import { BadRequestComponent } from './components/bad-request/bad-request.compon
     SignInComponent,
     NavigationComponent,
     ManageUserComponent,
-    BadRequestComponent
+    BadRequestComponent,
+    ManageAppComponent,
+    DialogUserViewComponent
+  ],
+  entryComponents: [
+    DialogUserViewComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +59,8 @@ import { BadRequestComponent } from './components/bad-request/bad-request.compon
     MatCardModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
