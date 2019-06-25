@@ -25,6 +25,7 @@ import { ManageUserComponent } from './components/manage-user/manage-user.compon
 import { BadRequestComponent } from './components/bad-request/bad-request.component';
 import { ManageAppComponent } from './components/manage-app/manage-app.component';
 import { DialogUserViewComponent } from './components/dialog-user-view/dialog-user-view.component';
+import { AddUserComponent } from './components/add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { DialogUserViewComponent } from './components/dialog-user-view/dialog-us
     ManageUserComponent,
     BadRequestComponent,
     ManageAppComponent,
-    DialogUserViewComponent
+    DialogUserViewComponent,
+    AddUserComponent
   ],
   entryComponents: [
     DialogUserViewComponent

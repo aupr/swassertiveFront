@@ -6,11 +6,13 @@ import {AuthGuard} from './auth.guard';
 import {ManageUserComponent} from './components/manage-user/manage-user.component';
 import {BadRequestComponent} from './components/bad-request/bad-request.component';
 import {ManageAppComponent} from './components/manage-app/manage-app.component';
+import {AddUserComponent} from './components/add-user/add-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'manage/user', component: ManageUserComponent, canActivate: [AuthGuard] },
+  { path: 'manage/user/add', component: AddUserComponent, canActivate: [AuthGuard] },
   { path: 'manage/app', component: ManageAppComponent, canActivate: [AuthGuard] },
   { path: 'signin', component: SignInComponent },
   { path: 'badrequest', component: BadRequestComponent }

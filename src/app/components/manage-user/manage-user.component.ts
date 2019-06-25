@@ -2,9 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {DataService} from '../../services/data.service';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource, PageEvent} from '@angular/material';
 import {DialogUserViewComponent} from '../dialog-user-view/dialog-user-view.component';
+import {Router} from '@angular/router';
 
 export interface User {
-  userId: number;
+  userId: string;
   name: string;
   username: string;
   designation: string;
@@ -22,6 +23,7 @@ export interface User {
 })
 export class ManageUserComponent implements OnInit {
   searchKey: string;
+  primaryData: any;
   tableData: any;
   displayedColumns: string[] = ['name', 'username', 'designation', 'duration', 'bloodGroup', 'userLevel', 'status', 'action'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -29,7 +31,8 @@ export class ManageUserComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    public dialog: MatDialog
+    private router: Router,
+    public dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -40,10 +43,11 @@ export class ManageUserComponent implements OnInit {
   getAllUsers() {
     this.dataService.getAllUsers().subscribe(sc => {
       const users: User[] = [];
-      sc.forEach((userData) => {
+      this.primaryData = sc;
+      this.primaryData.forEach((userData) => {
 
         const user: User = {
-          userId: Number(userData.userId),
+          userId: userData.userId,
           name: userData.name,
           username: userData.username,
           designation: 'M/A',
@@ -92,16 +96,17 @@ export class ManageUserComponent implements OnInit {
     this.userTableFilter(this.searchKey);
   }
 
-  openDialog(userData: any): void {
-    console.log(userData)
+  openDialog(userId: string): void {
+
+    const aUserById = this.primaryData.find(user => user.userId === userId);
+
     const dialogRef = this.dialog.open(DialogUserViewComponent, {
-      width: '250px',
+      width: '450px',
       panelClass: 'userViewModal',
-      data: userData
+      data: aUserById
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result) {
         console.log(result);
       }
