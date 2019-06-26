@@ -6,16 +6,16 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatCardModule, MatDialogModule,
+  MatButtonModule, MatCardModule, MatDatepickerModule, MatDialogModule,
   MatDividerModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatMenuModule, MatPaginatorModule,
-  MatProgressBarModule, MatSortModule, MatTableModule,
+  MatMenuModule, MatNativeDateModule, MatPaginatorModule,
+  MatProgressBarModule, MatSelectModule, MatSortModule, MatTableModule,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule
@@ -62,7 +62,11 @@ import { AddUserComponent } from './components/add-user/add-user.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

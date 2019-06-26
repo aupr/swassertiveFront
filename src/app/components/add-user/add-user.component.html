@@ -1,4 +1,118 @@
 <app-navigation></app-navigation>
-<p>
-  add-user works!
-</p>
+
+<div style="background-color: #fbfbfb; margin: 40px auto 20px auto; padding: 50px; width: 700px; border: 1px solid silver;">
+  <form [formGroup]="newUser">
+
+    <!--Full name field-->
+    <mat-form-field>
+      <mat-label>Full name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter full name">
+    </mat-form-field>
+
+    <!--Email field-->
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" placeholder="Enter username without space">
+    </mat-form-field>
+
+    <!--Password field-->
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <!--Add email section-->
+    <div style="border: 1px solid silver; padding: 10px;">
+      <div formArrayName="emails" *ngFor="let email of newUser.controls.emails.controls; let i = index">
+        <!--<hr *ngIf="newUser.value.emails.length>1">-->
+        <div formGroupName="{{ i }}" style="background-color: #f7f7f7; padding: 10px;">
+          <mat-form-field style="width: 100px;">
+            <mat-label>Email Type</mat-label>
+            <mat-select formControlName="type">
+              <mat-option value="Home">Home</mat-option>
+              <mat-option value="Work">Work</mat-option>
+              <mat-option value="Other">Other</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field style="width: 300px; margin-left: 10px; margin-right: 20px;">
+            <mat-label>E-mail address</mat-label>
+            <input matInput formControlName="email" placeholder="Enter email address">
+            <mat-icon matSuffix>email</mat-icon>
+          </mat-form-field>
+
+          <button mat-icon-button
+                  *ngIf="newUser.value.emails.length>1"
+                  color="warn"
+                  (click)="removeEmailGroup(i)">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+      </div>
+      <span>Add another email address</span>
+      <button mat-icon-button (click)="addEmailGroup()" color="accent"><mat-icon>add_circle</mat-icon></button>
+    </div>
+
+    <!--Add phone number section-->
+    <div style="border: 1px solid silver; padding: 10px; margin-top: 20px;">
+      <div formArrayName="phones" *ngFor="let phone of newUser.get('phones').controls; let i = index">
+
+        <div [formGroupName]="i" style="background-color: #f7f7f7; padding: 10px;">
+          <mat-form-field style="width: 100px;">
+            <mat-label>Phone Type</mat-label>
+            <mat-select formControlName="type">
+              <mat-option value="Home">Home</mat-option>
+              <mat-option value="Work">Work</mat-option>
+              <mat-option value="Other">Other</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field style="width: 300px; margin-left: 10px; margin-right: 20px;">
+            <mat-label>Phone number</mat-label>
+            <input formControlName="number" matInput placeholder="Enter phone number">
+            <mat-icon matSuffix>phone</mat-icon>
+          </mat-form-field>
+
+          <button mat-icon-button (click)="removePhoneGroup(i)" *ngIf="newUser.value.phones.length>1" color="warn"><mat-icon>clear</mat-icon></button>
+        </div>
+      </div>
+      <span>Add another phone number</span>
+      <button mat-icon-button (click)="addPhoneGroup()" color="accent"><mat-icon>add_circle</mat-icon></button>
+    </div >
+
+    <!--Designation section-->
+    <div style="margin-top: 50px;">
+      <div style="background-color: #f7f7f7; padding: 10px;">
+
+        <mat-form-field style="width: 100px;">
+          <mat-label>Status</mat-label>
+          <mat-select value="Present">
+            <mat-option value="Present">Present</mat-option>
+            <mat-option value="Previous">Previous</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field style="width: 300px; margin-left: 10px; margin-right: 20px;">
+          <mat-label>Designation</mat-label>
+          <input matInput placeholder="Title">
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <input matInput formControlName="expDate" [matDatepicker]="picker" placeholder="Choose a date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-icon-button color="warn"><mat-icon>close</mat-icon></button>
+      </div>
+    </div>
+
+
+
+  </form>
+</div>
