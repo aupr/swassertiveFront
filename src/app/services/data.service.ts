@@ -3,7 +3,7 @@ import {GlobalService} from './global.service';
 import {Observable, of} from 'rxjs/index';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {catchError} from 'rxjs/internal/operators';
+import {catchError, map} from 'rxjs/internal/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +26,20 @@ export class DataService {
         return of(false);
       })
     );
+  }
+
+  createNewUser(userData: any): Observable<any> {
+    return this.http.post(this.gs.apiServerStaticUrl + 'write/user', userData);
+  }
+
+  getAllLevels(): Observable<any> {
+    return this.http.get(this.gs.apiServerStaticUrl + 'read/level');
+  }
+
+  isUsernameAvailable(un: string): Observable<any> {
+    const pdt = {
+      username: un
+    }
+    return this.http.post(this.gs.apiServerStaticUrl + 'read/checkusername', pdt);
   }
 }

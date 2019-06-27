@@ -1,27 +1,42 @@
 <app-navigation></app-navigation>
 
 <div style="background-color: #fbfbfb; margin: 40px auto 20px auto; padding: 50px; width: 700px; border: 1px solid silver;">
-  <form [formGroup]="newUser">
+  <form *ngIf="userLevels" [formGroup]="newUser" (submit)="addNewUser()" autocomplete="false">
 
     <!--Full name field-->
     <mat-form-field>
       <mat-label>Full name</mat-label>
-      <input matInput formControlName="name" placeholder="Enter full name">
+      <input matInput formControlName="name" placeholder="Enter full name" required>
+      <mat-error>Required Field</mat-error>
     </mat-form-field>
 
-    <!--Email field-->
+    <!--Username field-->
     <mat-form-field>
       <mat-label>Username</mat-label>
-      <input matInput formControlName="username" placeholder="Enter username without space">
+      <input matInput formControlName="username" placeholder="Enter username without space" required>
+      <mat-error *ngIf="newUser.get('username').errors?.required">Required Field</mat-error>
+      <mat-error *ngIf="newUser.get('username').errors?.uniqueUsername">This name is not available</mat-error>
+      <mat-hint *ngIf="newUser.get('username').pending" align="end">Checking availability...</mat-hint>
     </mat-form-field>
 
     <!--Password field-->
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input matInput formControlName="password" placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+      <input matInput formControlName="password" placeholder="Enter your password" [type]="hide ? 'password' : 'text'" required>
       <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
+      <mat-error>Required Field</mat-error>
+    </mat-form-field>
+
+    <!--User level field-->
+    <mat-form-field>
+      <mat-label>User level</mat-label>
+      <mat-select formControlName="userLevelId" required>
+        <mat-option value="">Select...</mat-option>
+        <mat-option *ngFor="let userLevel of userLevels" [value]="userLevel.levelId">{{ userLevel.title }}</mat-option>
+      </mat-select>
+      <mat-error>Required Field</mat-error>
     </mat-form-field>
 
     <!--Add email section-->
@@ -31,7 +46,7 @@
         <div formGroupName="{{ i }}" style="background-color: #f7f7f7; padding: 10px;">
           <mat-form-field style="width: 100px;">
             <mat-label>Email Type</mat-label>
-            <mat-select formControlName="type">
+            <mat-select formControlName="emailType">
               <mat-option value="Home">Home</mat-option>
               <mat-option value="Work">Work</mat-option>
               <mat-option value="Other">Other</mat-option>
@@ -40,8 +55,10 @@
 
           <mat-form-field style="width: 300px; margin-left: 10px; margin-right: 20px;">
             <mat-label>E-mail address</mat-label>
-            <input matInput formControlName="email" placeholder="Enter email address">
+            <input matInput formControlName="email" placeholder="Enter email address" required>
             <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="email.get('email').errors?.required">Required field</mat-error>
+            <mat-error *ngIf="email.get('email').errors?.email">Invalid Email</mat-error>
           </mat-form-field>
 
           <button mat-icon-button
@@ -53,7 +70,7 @@
         </div>
       </div>
       <span>Add another email address</span>
-      <button mat-icon-button (click)="addEmailGroup()" color="accent"><mat-icon>add_circle</mat-icon></button>
+      <button mat-icon-button [disabled]="newUser.get('emails').invalid" (click)="addEmailGroup()" color="accent"><mat-icon>add_circle</mat-icon></button>
     </div>
 
     <!--Add phone number section-->
@@ -63,7 +80,7 @@
         <div [formGroupName]="i" style="background-color: #f7f7f7; padding: 10px;">
           <mat-form-field style="width: 100px;">
             <mat-label>Phone Type</mat-label>
-            <mat-select formControlName="type">
+            <mat-select formControlName="phoneType">
               <mat-option value="Home">Home</mat-option>
               <mat-option value="Work">Work</mat-option>
               <mat-option value="Other">Other</mat-option>
@@ -72,47 +89,100 @@
 
           <mat-form-field style="width: 300px; margin-left: 10px; margin-right: 20px;">
             <mat-label>Phone number</mat-label>
-            <input formControlName="number" matInput placeholder="Enter phone number">
+            <input formControlName="number" matInput placeholder="Enter phone number" required>
             <mat-icon matSuffix>phone</mat-icon>
+            <mat-error>Required Field</mat-error>
           </mat-form-field>
 
           <button mat-icon-button (click)="removePhoneGroup(i)" *ngIf="newUser.value.phones.length>1" color="warn"><mat-icon>clear</mat-icon></button>
         </div>
       </div>
       <span>Add another phone number</span>
-      <button mat-icon-button (click)="addPhoneGroup()" color="accent"><mat-icon>add_circle</mat-icon></button>
+      <button mat-icon-button [disabled]="newUser.get('phones').invalid" (click)="addPhoneGroup()" color="accent"><mat-icon>add_circle</mat-icon></button>
     </div >
 
+    <!--Date of birth section-->
+    <mat-form-field style="width: 300px; margin-top: 20px;">
+      <mat-label>Date of birth</mat-label>
+      <input matInput formControlName="dob" [matDatepicker]="doppicker" placeholder="Enter DOB" required>
+      <mat-datepicker-toggle matSuffix [for]="doppicker"></mat-datepicker-toggle>
+      <mat-datepicker #doppicker></mat-datepicker>
+      <mat-error>Required Field</mat-error>
+    </mat-form-field>
+
     <!--Designation section-->
-    <div style="margin-top: 50px;">
+    <div style="margin-top: 20px;">
       <div style="background-color: #f7f7f7; padding: 10px;">
 
-        <mat-form-field style="width: 100px;">
-          <mat-label>Status</mat-label>
-          <mat-select value="Present">
-            <mat-option value="Present">Present</mat-option>
-            <mat-option value="Previous">Previous</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field style="width: 300px; margin-left: 10px; margin-right: 20px;">
+        <mat-form-field style="width: 300px;  margin-right: 20px;">
           <mat-label>Designation</mat-label>
-          <input matInput placeholder="Title">
+          <input matInput formControlName="dgnTitle" placeholder="Title" required>
+          <mat-error>Required Field</mat-error>
         </mat-form-field>
 
-        <br>
-
-        <mat-form-field>
-          <input matInput formControlName="expDate" [matDatepicker]="picker" placeholder="Choose a date">
+        <mat-form-field  style="width: 200px;">
+          <mat-label>From date</mat-label>
+          <input matInput formControlName="dgnFromDate" [matDatepicker]="picker" placeholder="Choose a date" required>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error>Required Field</mat-error>
         </mat-form-field>
 
-        <button mat-icon-button color="warn"><mat-icon>close</mat-icon></button>
+        <!--<button mat-icon-button color="warn"><mat-icon>close</mat-icon></button>-->
       </div>
     </div>
 
 
+    <!--Gender + Religion + BloodGroup-->
+    <div style="padding: 10px; background-color: #f5f5f5; margin-top: 20px;">
+
+      <mat-form-field style="width: 180px;">
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option value="Male">Male</mat-option>
+          <mat-option value="Female">Female</mat-option>
+          <mat-option value="Other">Other</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field style="width: 180px; margin-left: 10px; margin-right: 10px;">
+        <mat-label>Religion</mat-label>
+        <mat-select formControlName="religion">
+          <mat-option value="Islam">Islam</mat-option>
+          <mat-option value="Hinduism">Hinduism</mat-option>
+          <mat-option value="Christianity">Christianity</mat-option>
+          <mat-option value="Buddism">Buddism</mat-option>
+          <mat-option value="Judaism">Judaism</mat-option>
+          <mat-option value="Catholicism">Catholicism</mat-option>
+          <mat-option value="Other">Other</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field style="width: 180px;">
+        <mat-label>Blood Group</mat-label>
+        <mat-select formControlName="bloodGroup">
+          <mat-option value="A+">A+</mat-option>
+          <mat-option value="A-">A-</mat-option>
+          <mat-option value="B+">B+</mat-option>
+          <mat-option value="B-">B-</mat-option>
+          <mat-option value="AB+">AB+</mat-option>
+          <mat-option value="AB-">AB-</mat-option>
+          <mat-option value="O+">O+</mat-option>
+          <mat-option value="O-">O-</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+    <mat-form-field style="margin-top: 20px;">
+      <mat-label>Address</mat-label>
+      <textarea matInput #addressVal maxlength="120" formControlName="address" placeholder="Enter address"></textarea>
+      <mat-hint align="end">{{ addressVal.value.length }} / 120</mat-hint>
+    </mat-form-field>
+
+    <div style="margin-top: 20px;" align="end">
+      <button mat-raised-button color="primary" type="submit" [disabled]="newUser.invalid"><mat-icon>save</mat-icon> Save</button>
+    </div>
 
   </form>
 </div>
