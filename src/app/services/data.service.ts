@@ -28,6 +28,18 @@ export class DataService {
     );
   }
 
+  getAllApps(): Observable<any> {
+    return this.http.get(this.gs.apiServerStaticUrl + 'read/app').pipe(
+      catchError(err => {
+        if (err.status === 401) {
+          console.error('authentication denied!');
+          this.router.navigate(['/badrequest']);
+        }
+        return of(false);
+      })
+    );
+  }
+
   createNewUser(userData: any): Observable<any> {
     return this.http.post(this.gs.apiServerStaticUrl + 'write/user', userData);
   }

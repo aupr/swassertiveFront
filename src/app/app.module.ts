@@ -9,13 +9,13 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatButtonModule, MatCardModule, MatDatepickerModule, MatDialogModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule,
   MatDividerModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
   MatMenuModule, MatNativeDateModule, MatPaginatorModule,
-  MatProgressBarModule, MatSelectModule, MatSortModule, MatTableModule,
+  MatProgressBarModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule
@@ -26,6 +26,7 @@ import { BadRequestComponent } from './components/bad-request/bad-request.compon
 import { ManageAppComponent } from './components/manage-app/manage-app.component';
 import { DialogUserViewComponent } from './components/dialog-user-view/dialog-user-view.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
+import { AddAppComponent } from './components/add-app/add-app.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { AddUserComponent } from './components/add-user/add-user.component';
     BadRequestComponent,
     ManageAppComponent,
     DialogUserViewComponent,
-    AddUserComponent
+    AddUserComponent,
+    AddAppComponent
   ],
   entryComponents: [
     DialogUserViewComponent
@@ -66,7 +68,8 @@ import { AddUserComponent } from './components/add-user/add-user.component';
     MatSelectModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
