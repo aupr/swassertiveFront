@@ -22,23 +22,30 @@ export class AddUserComponent implements OnInit {
       this.userLevels = sc;
       console.log(sc);
       this.buildForm();
-    });
 
-    // console.log(this.newUser);
-    /*this.newUser.valueChanges.subscribe(val => {
       console.log(this.newUser);
-      console.log((val.dgnFromDate as Date).getTime());
-      console.log((val.dgnFromDate));
-    });*/
+      this.newUser.valueChanges.subscribe(val => {
+        console.log(this.newUser);
+        console.log((val.dgnFromDate as Date).getTime());
+        console.log((val.dgnFromDate));
+      });
+
+
+    });
   }
 
   buildForm() {
     this.newUser = this.fb.group({
-      name: ['', Validators.required],
-      username: ['', Validators.required, CustomValidator.uniqueUsername(this.dataService)],
+      name: ['', [Validators.required, Validators.pattern('^[A-Z a-z.-]{3,30}$')]],
+      username: ['', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(20),
+        Validators.pattern('^[a-z0-9]+$')
+      ], CustomValidator.uniqueUsername(this.dataService)],
       dob: [new Date(), Validators.required],
       userLevelId: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
       gender: ['Male'],
       religion: ['Islam'],
       bloodGroup: ['A+'],
@@ -71,12 +78,12 @@ export class AddUserComponent implements OnInit {
       phones: data.phones,
       emails: data.emails,
       designations: [
-          {
-            fromTime: (Math.trunc(data.dgnFromDate.getTime() / 1000)).toString(),
-            toTime: '0',
-            title: data.dgnTitle
-          }
-        ]
+        {
+          fromTime: (Math.trunc(data.dgnFromDate.getTime() / 1000)).toString(),
+          toTime: '0',
+          title: data.dgnTitle
+        }
+      ]
     };
 
     return aUser;
@@ -84,7 +91,7 @@ export class AddUserComponent implements OnInit {
 
 
   addNewUser() {
-    console.log(this.mapUserData(this.newUser.value));
+    // console.log(this.mapUserData(this.newUser.value));
     this.dataService.createNewUser(this.mapUserData(this.newUser.value)).subscribe(sc => {
       console.log(sc);
     });

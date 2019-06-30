@@ -54,4 +54,10 @@ export class DataService {
     }
     return this.http.post(this.gs.apiServerStaticUrl + 'read/checkusername', pdt);
   }
+
+  createNewApp(appData: any): Observable<any> {
+    return this.http.post(this.gs.apiServerStaticUrl + 'write/app', appData);
+  }
+
+
 }

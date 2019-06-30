@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {DataService} from '../../services/data.service';
 
 @Component({
   selector: 'app-add-app',
@@ -11,7 +12,8 @@ export class AddAppComponent implements OnInit {
   newApp: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
@@ -31,6 +33,28 @@ export class AddAppComponent implements OnInit {
     });
   }
 
+
+  mapNewApp(data: any): any {
+    const anApp = {
+      appId: null,
+      appName: data.appName,
+      url: data.url,
+      sessAryName: data.sessAryName,
+      remark: data.remark,
+      disabled: '0',
+      accesses: data.accesses
+    };
+    return anApp;
+  }
+
+
+  saveNewApp() {
+    // console.log(this.newApp.value);
+    this.dataService.createNewApp(this.mapNewApp(this.newApp.value)).subscribe(sc => {
+      console.log(sc);
+    });
+  }
+
   makeAccessGroup(): FormGroup {
     return this.fb.group({
       keyword: ['', Validators.required],
@@ -38,5 +62,13 @@ export class AddAppComponent implements OnInit {
       val: [false]
     });
   }
+  addAccessGroup() {
+    (this.newApp.get('accesses') as FormArray).push(this.makeAccessGroup());
+  }
+  removeAccessGroup(groupIndex: number) {
+    (this.newApp.get('accesses') as FormArray).removeAt(groupIndex);
+  }
+
+
 
 }

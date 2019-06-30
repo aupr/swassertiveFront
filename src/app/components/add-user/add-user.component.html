@@ -7,26 +7,33 @@
     <mat-form-field>
       <mat-label>Full name</mat-label>
       <input matInput formControlName="name" placeholder="Enter full name" required>
-      <mat-error>Required Field</mat-error>
+      <mat-error *ngIf="newUser.get('name').errors?.required">Required Field</mat-error>
+      <mat-error *ngIf="newUser.get('name').errors?.pattern">3 to 30 character A-Z a-z . - are supported.</mat-error>
     </mat-form-field>
 
     <!--Username field-->
     <mat-form-field>
       <mat-label>Username</mat-label>
-      <input matInput formControlName="username" placeholder="Enter username without space" required>
+      <input matInput formControlName="username" #userNameTag placeholder="Enter username without space" required>
       <mat-error *ngIf="newUser.get('username').errors?.required">Required Field</mat-error>
+      <mat-error *ngIf="newUser.get('username').errors?.pattern">Small later, digit with no space supported</mat-error>
+      <mat-error *ngIf="newUser.get('username').errors?.minlength">Minimum length should be 4</mat-error>
+      <mat-error *ngIf="newUser.get('username').errors?.maxlength">Maximum allowed length 20</mat-error>
       <mat-error *ngIf="newUser.get('username').errors?.uniqueUsername">This name is not available</mat-error>
-      <mat-hint *ngIf="newUser.get('username').pending" align="end">Checking availability...</mat-hint>
+      <mat-hint *ngIf="newUser.get('username').pending" align="start">Checking availability...</mat-hint>
+      <mat-hint align="end">{{userNameTag.value.length}} / 20</mat-hint>
     </mat-form-field>
 
     <!--Password field-->
     <mat-form-field>
       <mat-label>Password</mat-label>
       <input matInput formControlName="password" placeholder="Enter your password" [type]="hide ? 'password' : 'text'" required>
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <button mat-icon-button matSuffix type="button" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
-      <mat-error>Required Field</mat-error>
+      <mat-error *ngIf="newUser.get('password').errors?.required">Required Field</mat-error>
+      <mat-error *ngIf="newUser.get('password').errors?.minlength">Minimum length 4</mat-error>
+      <mat-error *ngIf="newUser.get('password').errors?.maxlength">Maximum length 20</mat-error>
     </mat-form-field>
 
     <!--User level field-->
@@ -181,6 +188,7 @@
     </mat-form-field>
 
     <div style="margin-top: 20px;" align="end">
+      <button mat-flat-button type="button" style="margin-right: 10px;">Cancel and go back</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="newUser.invalid"><mat-icon>save</mat-icon> Save</button>
     </div>
 
