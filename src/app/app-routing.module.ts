@@ -8,6 +8,7 @@ import {BadRequestComponent} from './components/bad-request/bad-request.componen
 import {ManageAppComponent} from './components/manage-app/manage-app.component';
 import {AddUserComponent} from './components/add-user/add-user.component';
 import {AddAppComponent} from './components/add-app/add-app.component';
+import {EditAppComponent} from './components/edit-app/edit-app.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'manage/user/add', component: AddUserComponent, canActivate: [AuthGuard] },
   { path: 'manage/app', component: ManageAppComponent, canActivate: [AuthGuard] },
   { path: 'manage/app/add', component: AddAppComponent, canActivate: [AuthGuard] },
+  { path: 'manage/app/edit/:id', component: EditAppComponent, canActivate: [AuthGuard] },
   { path: 'signin', component: SignInComponent },
   { path: 'badrequest', component: BadRequestComponent }
 ];

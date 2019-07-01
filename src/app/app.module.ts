@@ -27,6 +27,7 @@ import { ManageAppComponent } from './components/manage-app/manage-app.component
 import { DialogUserViewComponent } from './components/dialog-user-view/dialog-user-view.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { AddAppComponent } from './components/add-app/add-app.component';
+import { EditAppComponent } from './components/edit-app/edit-app.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AddAppComponent } from './components/add-app/add-app.component';
     ManageAppComponent,
     DialogUserViewComponent,
     AddUserComponent,
-    AddAppComponent
+    AddAppComponent,
+    EditAppComponent
   ],
   entryComponents: [
     DialogUserViewComponent

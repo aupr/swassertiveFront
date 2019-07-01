@@ -55,6 +55,13 @@ export class DataService {
     return this.http.post(this.gs.apiServerStaticUrl + 'read/checkusername', pdt);
   }
 
+  isAppBaseNameAvailable(un: string): Observable<any> {
+    const pdt = {
+      basename: un
+    }
+    return this.http.post(this.gs.apiServerStaticUrl + 'read/checkappbasename', pdt);
+  }
+
   createNewApp(appData: any): Observable<any> {
     return this.http.post(this.gs.apiServerStaticUrl + 'write/app', appData);
   }

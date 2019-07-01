@@ -23,4 +23,23 @@ export class CustomValidator {
       }));
     };
   }
+
+  static uniqueBaseName(dataService: DataService) {
+    return (control: AbstractControl): Observable<{[Index: string]: any} | null > => {
+      return dataService.isAppBaseNameAvailable(control.value).pipe(
+        debounceTime(500),
+        take(1),
+        map(sc => {
+          if (sc === true) {
+            return {uniqueBaseName: true};
+          } else {
+            return null;
+          }
+        }, fl => {
+          console.log(fl);
+          return null;
+        }));
+    };
+  }
+
 }

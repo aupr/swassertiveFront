@@ -12,13 +12,17 @@
     <mat-form-field>
       <mat-label>Application URL</mat-label>
       <input matInput formControlName="url" placeholder="Enter App URL">
-      <mat-error>Field is required</mat-error>
+      <mat-error *ngIf="newApp.get('url').errors?.required">Field is required</mat-error>
+      <mat-error *ngIf="newApp.get('url').errors?.pattern">Invalid URL</mat-error>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Base name</mat-label>
       <input matInput formControlName="sessAryName" placeholder="Enter App base anme">
-      <mat-error>Field is required</mat-error>
+      <mat-error *ngIf="newApp.get('sessAryName').errors?.required">Field is required</mat-error>
+      <mat-error *ngIf="newApp.get('sessAryName').errors?.minlength">Minimum length is 2</mat-error>
+      <mat-error *ngIf="newApp.get('sessAryName').errors?.uniqueBaseName">This value is already exists</mat-error>
+      <mat-hint *ngIf="newApp.get('sessAryName').pending" align="end">Checking availability...</mat-hint>
     </mat-form-field>
 
     <mat-form-field>

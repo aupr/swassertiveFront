@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DataService} from '../../services/data.service';
+import {CustomValidator} from '../../services/custom.validator';
 
 @Component({
   selector: 'app-add-app',
@@ -24,8 +25,8 @@ export class AddAppComponent implements OnInit {
   buildForm() {
     this.newApp = this.fb.group({
       appName: ['', Validators.required],
-      url: ['', Validators.required],
-      sessAryName: ['', Validators.required],
+      url: ['', [Validators.required, Validators.pattern('^(http|HTTP)(|s|S)(:\\/\\/).{2,100}$')]],
+      sessAryName: ['', [Validators.required, Validators.minLength(2)], CustomValidator.uniqueBaseName(this.dataService)],
       remark: [''],
       accesses: this.fb.array([
         this.makeAccessGroup()
