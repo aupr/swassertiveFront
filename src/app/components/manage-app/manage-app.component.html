@@ -46,7 +46,10 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="warn" matTooltip="Edit App properties" matTooltipPosition="before"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn"
+                matTooltip="Edit App properties"
+                (click)="router.navigate(['/manage/app/edit/' + element.appId])"
+                matTooltipPosition="before"><mat-icon>edit</mat-icon></button>
       </td>
     </ng-container>
 

@@ -17,7 +17,7 @@ export class DataService {
   ) { }
 
   getAllUsers(): Observable<any> {
-    return this.http.get(this.gs.apiServerStaticUrl + 'read/user').pipe(
+    return this.http.get(this.gs.apiServerStaticUrl + 'base/user').pipe(
       catchError(err => {
         if (err.status === 401) {
           console.error('authentication denied!');
@@ -29,7 +29,7 @@ export class DataService {
   }
 
   getAllApps(): Observable<any> {
-    return this.http.get(this.gs.apiServerStaticUrl + 'read/app').pipe(
+    return this.http.get(this.gs.apiServerStaticUrl + 'base/app').pipe(
       catchError(err => {
         if (err.status === 401) {
           console.error('authentication denied!');
@@ -40,30 +40,46 @@ export class DataService {
     );
   }
 
+  getAppById(id: string): Observable<any> {
+    return this.http.get(this.gs.apiServerStaticUrl + 'base/app&id=' + id).pipe(
+      catchError(err => {
+        if (err.status === 401) {
+          console.error('authentication denied!');
+          this.router.navigate(['/badrequest']);
+        }
+        return of(false);
+      })
+    );
+  }
+
+  updateApp(appData: any): Observable<any> {
+    return this.http.put(this.gs.apiServerStaticUrl + 'base/app', appData);
+  }
+
   createNewUser(userData: any): Observable<any> {
-    return this.http.post(this.gs.apiServerStaticUrl + 'write/user', userData);
+    return this.http.post(this.gs.apiServerStaticUrl + 'base/user', userData);
   }
 
   getAllLevels(): Observable<any> {
-    return this.http.get(this.gs.apiServerStaticUrl + 'read/level');
+    return this.http.get(this.gs.apiServerStaticUrl + 'base/level');
   }
 
   isUsernameAvailable(un: string): Observable<any> {
     const pdt = {
       username: un
     }
-    return this.http.post(this.gs.apiServerStaticUrl + 'read/checkusername', pdt);
+    return this.http.post(this.gs.apiServerStaticUrl + 'check/username', pdt);
   }
 
   isAppBaseNameAvailable(un: string): Observable<any> {
     const pdt = {
       basename: un
     }
-    return this.http.post(this.gs.apiServerStaticUrl + 'read/checkappbasename', pdt);
+    return this.http.post(this.gs.apiServerStaticUrl + 'check/appbasename', pdt);
   }
 
   createNewApp(appData: any): Observable<any> {
-    return this.http.post(this.gs.apiServerStaticUrl + 'write/app', appData);
+    return this.http.post(this.gs.apiServerStaticUrl + 'base/app', appData);
   }
 
 
