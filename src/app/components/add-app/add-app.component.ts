@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DataService} from '../../services/data.service';
 import {CustomValidator} from '../../services/custom.validator';
+import {Location} from '@angular/common';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-add-app',
@@ -14,7 +16,9 @@ export class AddAppComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private dataService: DataService
+    private dataService: DataService,
+    private location: Location,
+    private gs: GlobalService
   ) { }
 
   ngOnInit() {
@@ -25,7 +29,7 @@ export class AddAppComponent implements OnInit {
   buildForm() {
     this.newApp = this.fb.group({
       appName: ['', Validators.required],
-      url: ['', [Validators.required, Validators.pattern('^(http|HTTP)(|s|S)(:\\/\\/).{2,100}$')]],
+      url: ['http://', [Validators.required, Validators.pattern('^(http|HTTP)(|s|S)(:\\/\\/).{2,100}$')]],
       sessAryName: ['', [Validators.required, Validators.minLength(2)], CustomValidator.uniqueBaseName(this.dataService)],
       remark: [''],
       accesses: this.fb.array([
@@ -50,9 +54,12 @@ export class AddAppComponent implements OnInit {
 
 
   saveNewApp() {
+    this.gs.isLoading = true;
     // console.log(this.newApp.value);
     this.dataService.createNewApp(this.mapNewApp(this.newApp.value)).subscribe(sc => {
       console.log(sc);
+      this.gs.isLoading = false;
+      this.location.back();
     });
   }
 

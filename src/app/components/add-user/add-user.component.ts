@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DataService} from '../../services/data.service';
 import {CustomValidator} from '../../services/custom.validator';
+import {Location} from '@angular/common';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-add-user',
@@ -14,7 +16,9 @@ export class AddUserComponent implements OnInit {
   userLevels: any;
 
   constructor(private fb: FormBuilder,
-              private dataService: DataService
+              private dataService: DataService,
+              private location: Location,
+              private gs: GlobalService
   ) { }
 
   ngOnInit() {
@@ -91,9 +95,11 @@ export class AddUserComponent implements OnInit {
 
 
   addNewUser() {
+    this.gs.isLoading = true;
     // console.log(this.mapUserData(this.newUser.value));
     this.dataService.createNewUser(this.mapUserData(this.newUser.value)).subscribe(sc => {
       console.log(sc);
+      this.gs.isLoading = false;
     });
   }
 

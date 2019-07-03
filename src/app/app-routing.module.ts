@@ -9,6 +9,7 @@ import {ManageAppComponent} from './components/manage-app/manage-app.component';
 import {AddUserComponent} from './components/add-user/add-user.component';
 import {AddAppComponent} from './components/add-app/add-app.component';
 import {EditAppComponent} from './components/edit-app/edit-app.component';
+import {ManageLevelComponent} from './components/manage-level/manage-level.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'manage/app', component: ManageAppComponent, canActivate: [AuthGuard] },
   { path: 'manage/app/add', component: AddAppComponent, canActivate: [AuthGuard] },
   { path: 'manage/app/edit/:id', component: EditAppComponent, canActivate: [AuthGuard] },
+  { path: 'manage/level', component: ManageLevelComponent, canActivate: [AuthGuard] },
   { path: 'signin', component: SignInComponent },
   { path: 'badrequest', component: BadRequestComponent }
 ];

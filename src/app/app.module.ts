@@ -24,10 +24,12 @@ import {HttpClientModule} from '@angular/common/http';
 import { ManageUserComponent } from './components/manage-user/manage-user.component';
 import { BadRequestComponent } from './components/bad-request/bad-request.component';
 import { ManageAppComponent } from './components/manage-app/manage-app.component';
-import { DialogUserViewComponent } from './components/dialog-user-view/dialog-user-view.component';
+import { DialogUserViewComponent } from './dialog/dialog-user-view/dialog-user-view.component';
 import { AddUserComponent } from './components/add-user/add-user.component';
 import { AddAppComponent } from './components/add-app/add-app.component';
 import { EditAppComponent } from './components/edit-app/edit-app.component';
+import { ManageLevelComponent } from './components/manage-level/manage-level.component';
+import { DialogAddLevelComponent } from './dialog/dialog-add-level/dialog-add-level.component';
 
 @NgModule({
   declarations: [
@@ -41,10 +43,13 @@ import { EditAppComponent } from './components/edit-app/edit-app.component';
     DialogUserViewComponent,
     AddUserComponent,
     AddAppComponent,
-    EditAppComponent
+    EditAppComponent,
+    ManageLevelComponent,
+    DialogAddLevelComponent
   ],
   entryComponents: [
-    DialogUserViewComponent
+    DialogUserViewComponent,
+    DialogAddLevelComponent
   ],
   imports: [
     BrowserModule,

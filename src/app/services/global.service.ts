@@ -9,4 +9,6 @@ export class GlobalService {
   apiServerStaticUrl = 'http://localhost/swassertive/?api=';
 
   userData: any;
+
+  isLoading: boolean;
 }

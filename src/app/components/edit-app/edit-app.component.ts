@@ -3,6 +3,8 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DataService} from '../../services/data.service';
 import {CustomValidator} from '../../services/custom.validator';
 import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-edit-app',
@@ -14,9 +16,11 @@ export class EditAppComponent implements OnInit {
   editApp: FormGroup;
 
   constructor(
+    private gs: GlobalService,
     private fb: FormBuilder,
     private dataService: DataService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -80,10 +84,13 @@ export class EditAppComponent implements OnInit {
   }
 
   saveApp() {
+    this.gs.isLoading = true;
     const dataToSend = this.mapEditAppData(this.editApp.value);
     // console.log(dataToSend);
     this.dataService.updateApp(dataToSend).subscribe(sc => {
       console.log(sc);
+      this.gs.isLoading = false;
+      this.location.back();
     });
   }
 

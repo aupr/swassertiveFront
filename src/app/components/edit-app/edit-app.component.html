@@ -1,74 +1,94 @@
 <app-navigation></app-navigation>
+<mat-progress-bar mode="query" *ngIf="gs.isLoading"></mat-progress-bar>
+<div [ngClass]="{disabledDiv: gs.isLoading}" style="background-color: red; margin: 40px auto 20px auto; width: 700px; border: 1px solid silver;">
+  <mat-toolbar color="primary">
+    <button mat-flat-button color="primary"
+            (click)="location.back()"
+            matTooltipPosition="after"
+            matTooltip="Go back to the previous page">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    Edit application properties
+  </mat-toolbar>
+  <div style="background-color: #fbfbfb; padding: 50px;">
+    <form *ngIf="editApp" [formGroup]="editApp" (submit)="saveApp()" autocomplete="false">
 
-<div style="background-color: #fbfbfb; margin: 40px auto 20px auto; padding: 50px; width: 700px; border: 1px solid silver;">
-  <form *ngIf="editApp" [formGroup]="editApp" (submit)="saveApp()" autocomplete="false">
+      <mat-form-field>
+        <mat-label>Application Name</mat-label>
+        <input matInput formControlName="appName" placeholder="Enter App name">
+        <mat-error>Field is required</mat-error>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Application Name</mat-label>
-      <input matInput formControlName="appName" placeholder="Enter App name">
-      <mat-error>Field is required</mat-error>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Application URL</mat-label>
+        <input matInput formControlName="url" placeholder="Enter App URL">
+        <mat-error *ngIf="editApp.get('url').errors?.required">Field is required</mat-error>
+        <mat-error *ngIf="editApp.get('url').errors?.pattern">Invalid URL</mat-error>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Application URL</mat-label>
-      <input matInput formControlName="url" placeholder="Enter App URL">
-      <mat-error *ngIf="editApp.get('url').errors?.required">Field is required</mat-error>
-      <mat-error *ngIf="editApp.get('url').errors?.pattern">Invalid URL</mat-error>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Base name (Disabled)</mat-label>
+        <input matInput formControlName="sessAryName" placeholder="Enter App base anme">
+        <mat-error *ngIf="editApp.get('sessAryName').errors?.required">Field is required</mat-error>
+        <mat-error *ngIf="editApp.get('sessAryName').errors?.minlength">Minimum length is 2</mat-error>
+        <mat-error *ngIf="editApp.get('sessAryName').errors?.uniqueBaseName">This value is already exists</mat-error>
+        <mat-hint *ngIf="editApp.get('sessAryName').pending" align="end">Checking availability...</mat-hint>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Base name (Disabled)</mat-label>
-      <input matInput formControlName="sessAryName" placeholder="Enter App base anme">
-      <mat-error *ngIf="editApp.get('sessAryName').errors?.required">Field is required</mat-error>
-      <mat-error *ngIf="editApp.get('sessAryName').errors?.minlength">Minimum length is 2</mat-error>
-      <mat-error *ngIf="editApp.get('sessAryName').errors?.uniqueBaseName">This value is already exists</mat-error>
-      <mat-hint *ngIf="editApp.get('sessAryName').pending" align="end">Checking availability...</mat-hint>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Remark</mat-label>
-      <textarea matInput #remarkTag formControlName="remark" maxlength="100" placeholder="Write down any dependencies or critical operations."></textarea>
-      <mat-hint align="end">{{remarkTag.value.length}} / 100</mat-hint>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Remark</mat-label>
+        <textarea matInput #remarkTag formControlName="remark" maxlength="100"
+                  placeholder="Write down any dependencies or critical operations."></textarea>
+        <mat-hint align="end">{{remarkTag.value.length}} / 100</mat-hint>
+      </mat-form-field>
 
 
-    <div style="margin-top: 20px; padding: 10px; border: 1px solid silver;">
-      <div formArrayName="accesses" *ngFor="let access of editApp.get('accesses').controls; let i = index" style="padding: 10px; background-color: #f5f5f5; border-bottom: 1px solid silver;">
-        <div [formGroupName]="i">
+      <div style="margin-top: 20px; padding: 10px; border: 1px solid silver;">
+        <div formArrayName="accesses" *ngFor="let access of editApp.get('accesses').controls; let i = index"
+             style="padding: 10px; background-color: #f5f5f5; border-bottom: 1px solid silver;">
+          <div [formGroupName]="i">
 
-          <mat-form-field style="width: 450px;">
-            <mat-label>Definition</mat-label>
-            <input matInput formControlName="definition" placeholder="Access definition" required>
-            <mat-error>Field is required</mat-error>
-          </mat-form-field>
-          <button mat-icon-button (click)="removeAccessGroup(i)"
-                  color="warn" style="margin-left: 20px;"
-                  *ngIf="editApp.get('accesses').length>1"><mat-icon>clear</mat-icon></button>
+            <mat-form-field style="width: 450px;">
+              <mat-label>Definition</mat-label>
+              <input matInput formControlName="definition" placeholder="Access definition" required>
+              <mat-error>Field is required</mat-error>
+            </mat-form-field>
+            <button mat-icon-button (click)="removeAccessGroup(i)"
+                    color="warn" style="margin-left: 20px;"
+                    *ngIf="editApp.get('accesses').length>1">
+              <mat-icon>clear</mat-icon>
+            </button>
 
-          <mat-form-field style="width: 200px; margin-right: 50px;">
-            <mat-label>Keyword</mat-label>
-            <input matInput formControlName="keyword" placeholder="Access keyword" required>
-            <mat-error>Field is required</mat-error>
-          </mat-form-field>
+            <mat-form-field style="width: 200px; margin-right: 50px;">
+              <mat-label>Keyword</mat-label>
+              <input matInput formControlName="keyword" placeholder="Access keyword" required>
+              <mat-error>Field is required</mat-error>
+            </mat-form-field>
 
-          <mat-slide-toggle formControlName="val" #valTag>Default value {{ access.get('val').value?'enabled':'disabled' }}</mat-slide-toggle>
+            <mat-slide-toggle formControlName="val" #valTag>Default value {{
+              access.get('val').value?'enabled':'disabled' }}
+            </mat-slide-toggle>
 
+          </div>
         </div>
+        Add a another access field
+        <button mat-icon-button
+                type="button"
+                style="margin-left: 20px;"
+                (click)="addAccessGroup()"
+                color="accent"
+                [disabled]="editApp.get('accesses').invalid">
+          <mat-icon>add_circle</mat-icon>
+        </button>
       </div>
-      Add a another access field
-      <button mat-icon-button
-              type="button"
-              style="margin-left: 20px;"
-              (click)="addAccessGroup()"
-              color="accent"
-              [disabled]="editApp.get('accesses').invalid">
-        <mat-icon>add_circle</mat-icon>
-      </button>
-    </div>
 
 
-    <div style="margin-top: 20px; padding: 20px;" align="end">
-      <button mat-raised-button type="submit" color="primary" [disabled]="editApp.invalid"><mat-icon>save</mat-icon>Save</button>
-    </div>
-  </form>
+      <div style="margin-top: 20px; padding: 20px;" align="end">
+        <button mat-raised-button type="submit" color="primary" [disabled]="editApp.invalid">
+          <mat-icon>save</mat-icon>
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

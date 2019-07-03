@@ -1,8 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {DataService} from '../../services/data.service';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource, PageEvent} from '@angular/material';
-import {DialogUserViewComponent} from '../dialog-user-view/dialog-user-view.component';
+import {DialogUserViewComponent} from '../../dialog/dialog-user-view/dialog-user-view.component';
 import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 export interface User {
   userId: string;
@@ -33,6 +34,7 @@ export class ManageUserComponent implements OnInit {
     private dataService: DataService,
     private router: Router,
     public dialog: MatDialog,
+    public location: Location
   ) {}
 
   ngOnInit() {

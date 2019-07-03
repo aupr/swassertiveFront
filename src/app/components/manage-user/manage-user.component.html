@@ -1,15 +1,33 @@
 <app-navigation></app-navigation>
 <div style="width: 100%; margin: 10px auto 0 auto; padding: 10px; background-color: #FFF;">
-  <mat-form-field class="search-form-field" floatLabel="never">
-    <input matInput style="background-color:  background-color: #f5f5f5;" [(ngModel)]="searchKey" (keyup)="userTableFilter($event.target.value)" placeholder="Search...">
-    <button mat-icon-button matSuffix (click)="onSearchClear()" aria-label="clear"><mat-icon>close</mat-icon></button>
-  </mat-form-field>
+  <mat-toolbar style="justify-content: space-between;">
+    <div>
+      <button mat-flat-button style="background: #f5f5f5;"
+              matTooltipPosition="after"
+              matTooltip="Go back to the previous page"
+              (click)="location.back()">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      MANAGE USER ACCOUNT
+    </div>
+    <div>
+      <mat-form-field class="search-form-field" floatLabel="never">
+        <input matInput style="background-color:  background-color: #f5f5f5;" [(ngModel)]="searchKey" (keyup)="userTableFilter($event.target.value)" placeholder="Search...">
+        <button mat-icon-button matSuffix (click)="onSearchClear()" aria-label="clear"><mat-icon>close</mat-icon></button>
+      </mat-form-field>
 
-  <button mat-mini-fab
-          style="margin-left: 50px;" color="accent"
-          aria-label="Add new user" (click)="router.navigate(['/manage/user/add'])">
-    <mat-icon>add</mat-icon>
-  </button>
+      <button mat-mini-fab
+              matTooltipPosition="before"
+              matTooltip="Add new user"
+              style="margin-left: 50px;" color="accent"
+              aria-label="Add new user" (click)="router.navigate(['/manage/user/add'])">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+
+
 
   <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 50, 100]" [pageSize]="10" showFirstLastButtons></mat-paginator>
 
@@ -61,8 +79,8 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="openDialog(element.userId)"><mat-icon>launch</mat-icon></button>
-        <button mat-icon-button><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button matTooltip="Detail view" matTooltipPosition="before" color="accent" (click)="openDialog(element.userId)"><mat-icon>launch</mat-icon></button>
+        <button mat-icon-button matTooltip="Edit" matTooltipPosition="before" color="warn"><mat-icon>edit</mat-icon></button>
       </td>
     </ng-container>
 

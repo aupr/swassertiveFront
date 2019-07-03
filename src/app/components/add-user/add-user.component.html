@@ -1,6 +1,16 @@
 <app-navigation></app-navigation>
-
-<div style="background-color: #fbfbfb; margin: 40px auto 20px auto; padding: 50px; width: 700px; border: 1px solid silver;">
+<mat-progress-bar mode="query" *ngIf="gs.isLoading"></mat-progress-bar>
+<div [ngClass]="{disabledDiv: gs.isLoading}" style="background-color: red; margin: 40px auto 20px auto; width: 700px; border: 1px solid silver;">
+  <mat-toolbar color="primary">
+    <button mat-flat-button color="primary"
+            (click)="location.back()"
+            matTooltipPosition="after"
+            matTooltip="Go back to the previous page">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    Add new user
+  </mat-toolbar>
+<div style="background-color: #fbfbfb; padding: 50px;">
   <form *ngIf="userLevels" [formGroup]="newUser" (submit)="addNewUser()" autocomplete="false">
 
     <!--Full name field-->
@@ -188,9 +198,9 @@
     </mat-form-field>
 
     <div style="margin-top: 20px;" align="end">
-      <button mat-flat-button type="button" style="margin-right: 10px;">Cancel and go back</button>
       <button mat-raised-button color="primary" type="submit" [disabled]="newUser.invalid"><mat-icon>save</mat-icon> Save</button>
     </div>
 
   </form>
+</div>
 </div>

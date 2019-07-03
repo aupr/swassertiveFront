@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {DataService} from '../../services/data.service';
 import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 export interface App {
   appId: string;
@@ -28,6 +29,7 @@ export class ManageAppComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private router: Router,
+    private location: Location,
     public dialog: MatDialog,
   ) {}
 

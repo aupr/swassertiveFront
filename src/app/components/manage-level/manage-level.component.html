@@ -2,6 +2,7 @@
 
 <div style="width: 100%; margin: 10px auto 0 auto; padding: 10px; background-color: #FFF;">
   <mat-toolbar style="justify-content: space-between;">
+
     <div>
       <button mat-flat-button style="background: #f5f5f5;"
               (click)="location.back()"
@@ -9,18 +10,20 @@
               matTooltip="Go back to the previous page">
         <mat-icon>keyboard_arrow_left</mat-icon>
       </button>
-      Manage Application
+      MANAGE USER LEVEL
     </div>
     <div>
+
+
       <mat-form-field class="search-form-field" floatLabel="never">
         <input matInput style="background-color:  background-color: #f5f5f5;" [(ngModel)]="searchKey" (keyup)="levelTableFilter($event.target.value)" placeholder="Search...">
         <button mat-icon-button matSuffix (click)="onSearchClear()" aria-label="clear"><mat-icon>close</mat-icon></button>
       </mat-form-field>
 
       <button mat-mini-fab
-              style="margin-left: 50px;" color="accent"
-              aria-label="Add new user" (click)="router.navigate(['/manage/app/add'])"
-              matTooltip="Add new App"
+              color="accent"
+              (click)="addNewLevel()"
+              matTooltip="Add new level"
               matTooltipPosition="before">
         <mat-icon>add</mat-icon>
       </button>
@@ -31,27 +34,15 @@
   <table mat-table [dataSource]="tableData" class="mat-elevation-z8" matSort>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="appName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> App name </th>
-      <td mat-cell *matCellDef="let element"> {{element.appName}} </td>
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
     </ng-container>
 
     <!-- Username Column -->
-    <ng-container matColumnDef="sessAryName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Base name </th>
-      <td mat-cell *matCellDef="let element"> {{element.sessAryName}} </td>
-    </ng-container>
-
-    <!-- Designation Column -->
-    <ng-container matColumnDef="remark">
-      <th mat-header-cell *matHeaderCellDef> Remark </th>
-      <td mat-cell *matCellDef="let element"> {{element.remark}} </td>
-    </ng-container>
-
-    <!-- Status Column -->
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status </th>
-      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
     </ng-container>
 
     <!-- Action Column -->
@@ -59,9 +50,18 @@
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button color="warn"
-                matTooltip="Edit App properties"
-                (click)="router.navigate(['/manage/app/edit/' + element.appId])"
-                matTooltipPosition="before"><mat-icon>edit</mat-icon></button>
+                matTooltip="Edit user level properties"
+                (click)="router.navigate(['/manage/app/edit/' + element.levelId])"
+                matTooltipPosition="before">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="accent"
+                matTooltip="Manage user level app list"
+                (click)="router.navigate(['/manage/level/apps/' + element.levelId])"
+                matTooltipPosition="before">
+          <mat-icon>playlist_add_check</mat-icon>
+        </button>
+
       </td>
     </ng-container>
 
