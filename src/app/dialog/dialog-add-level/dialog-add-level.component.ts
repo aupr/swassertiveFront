@@ -8,7 +8,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./dialog-add-level.component.scss']
 })
 export class DialogAddLevelComponent implements OnInit {
-  outputData = 'output data';
   formData: FormGroup;
 
   constructor(
@@ -18,11 +17,13 @@ export class DialogAddLevelComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.buildForm();
   }
 
   buildForm() {
     this.formData = this.fb.group({
-      title: [this.data.title, Validators.required]
+      title: [this.data.title, [Validators.required, Validators.minLength(3)]],
+      description: [this.data.description]
     });
   }
 

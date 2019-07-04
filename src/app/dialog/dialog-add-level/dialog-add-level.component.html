@@ -1,20 +1,24 @@
 <h1 mat-dialog-title>{{data.levelId?'Edit level':'Add new level'}}</h1>
 <div mat-dialog-content>
 
-  <mat-form-field>
-    <mat-label>Title</mat-label>
-    <input matInput placeholder="Enter title">
-    <mat-error>Field is required</mat-error>
-  </mat-form-field>
+  <form [formGroup]="formData" autocomplete="off">
 
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <textarea matInput placeholder="Enter description"></textarea>
-    <mat-error>Field is required</mat-error>
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" placeholder="Enter title" cdkFocusInitial>
+      <mat-error *ngIf="formData.get('title').errors?.required">Field is required</mat-error>
+      <mat-error *ngIf="formData.get('title').errors?.minlength">Minimum length is 3</mat-error>
+    </mat-form-field>
 
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" placeholder="Enter description"></textarea>
+      <mat-error>Field is required</mat-error>
+    </mat-form-field>
+
+  </form>
 </div>
 <div mat-dialog-actions align="end">
   <button mat-flat-button (click)="onNoClick()">Cancel</button>
-  <button mat-raised-button [mat-dialog-close]="outputData" cdkFocusInitial>Save</button>
+  <button mat-raised-button [disabled]="formData.invalid" [mat-dialog-close]="formData.value">Save</button>
 </div>

@@ -9,6 +9,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
+  MatAutocompleteModule,
   MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule,
   MatDividerModule,
   MatIconModule,
@@ -30,6 +31,7 @@ import { AddAppComponent } from './components/add-app/add-app.component';
 import { EditAppComponent } from './components/edit-app/edit-app.component';
 import { ManageLevelComponent } from './components/manage-level/manage-level.component';
 import { DialogAddLevelComponent } from './dialog/dialog-add-level/dialog-add-level.component';
+import { ManageLevelAppComponent } from './components/manage-level-app/manage-level-app.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { DialogAddLevelComponent } from './dialog/dialog-add-level/dialog-add-le
     AddAppComponent,
     EditAppComponent,
     ManageLevelComponent,
-    DialogAddLevelComponent
+    DialogAddLevelComponent,
+    ManageLevelAppComponent
   ],
   entryComponents: [
     DialogUserViewComponent,
@@ -76,7 +79,8 @@ import { DialogAddLevelComponent } from './dialog/dialog-add-level/dialog-add-le
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -64,6 +64,22 @@ export class DataService {
     return this.http.get(this.gs.apiServerStaticUrl + 'base/level');
   }
 
+  createNewLevel(levelData: any): Observable<any> {
+    return this.http.post(this.gs.apiServerStaticUrl + 'base/level', levelData);
+  }
+
+  editLevel(levelData: any) {
+    return this.http.put(this.gs.apiServerStaticUrl + 'base/level', levelData);
+  }
+
+  getLevelApps(levelId: string) {
+    return this.http.get(this.gs.apiServerStaticUrl + 'base/levelapp&id=' + levelId);
+  }
+
+  addAppToLevel(pdt: any): Observable<any> {
+    return this.http.post(this.gs.apiServerStaticUrl + 'base/levelapp', pdt);
+  }
+
   isUsernameAvailable(un: string): Observable<any> {
     const pdt = {
       username: un

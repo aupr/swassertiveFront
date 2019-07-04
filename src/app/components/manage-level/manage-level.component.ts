@@ -91,9 +91,48 @@ export class ManageLevelComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
+        console.log('Creating new level');
+        this.dataService.createNewLevel(result).subscribe(sc => {
+          console.log(sc);
+          this.getAllLevels();
+        });
+      } else {
+        console.log('Dialog canceled');
       }
     });
-
   }
+
+  editLevel(levelId: string) {
+    const aLevelById = this.primaryData.find(sLevel => sLevel.levelId === levelId);
+    const level: Level = {
+      levelId: aLevelById,
+      title: aLevelById.title,
+      description: aLevelById.description
+    }
+
+    const dialogRef = this.dialog.open(DialogAddLevelComponent, {
+      width: '450px',
+      panelClass: 'userViewModal',
+      data: level
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Updating new level');
+        const pdt = {
+          levelId: aLevelById.levelId,
+          title: result.title,
+          description: result.description
+        };
+        this.dataService.editLevel(pdt).subscribe(sc => {
+          console.log(sc);
+          this.getAllLevels();
+        });
+      } else {
+        console.log('Dialog canceled');
+      }
+    });
+  }
+
+
 }
