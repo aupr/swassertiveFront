@@ -4,6 +4,9 @@ import {DataService} from '../../services/data.service';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/index';
 import {map, startWith} from 'rxjs/internal/operators';
+import {Location} from '@angular/common';
+import {DialogChangeLevelAppPermissionComponent} from '../../dialog/dialog-change-level-app-permission/dialog-change-level-app-permission.component';
+import {MatDialog, MatSnackBar} from '@angular/material';
 
 export interface App {
   appId: string;
@@ -23,11 +26,14 @@ export class ManageLevelAppComponent implements OnInit {
   filteredOptions: Observable<App[]>;
   selectedAppId = '';
 
-  allAppList: App[] = [];
+  remainingAppListToAdd: App[] = [];
 
   constructor(
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -39,7 +45,7 @@ export class ManageLevelAppComponent implements OnInit {
 
 
     this.appPickControl.valueChanges.subscribe(val => {
-      console.log(this.selectedAppId);
+      // console.log(this.selectedAppId);
       this.selectedAppId = '';
     });
 
@@ -60,6 +66,9 @@ export class ManageLevelAppComponent implements OnInit {
   getAppList() {
     this.dataService.getAllApps().subscribe(sc => {
 
+      // clear Remaining app list to add
+      this.remainingAppListToAdd.length = 0;
+
       sc.forEach(iApp => {
 
         const anApp: App = {
@@ -70,10 +79,8 @@ export class ManageLevelAppComponent implements OnInit {
         const abc = this.permittedAppList.appList.filter(datas => datas.appName.toLowerCase().includes(anApp.appName.toLowerCase()));
 
         if (abc.length === 0) {
-          this.allAppList.push(anApp);
+          this.remainingAppListToAdd.push(anApp);
         }
-
-
 
       });
 
@@ -106,10 +113,75 @@ export class ManageLevelAppComponent implements OnInit {
     });
   }
 
+  removeAppFromThisLevel(id: string) {
+
+    const conf = confirm('Do you want remove this app form user level');
+
+    if (conf) {
+      console.log('Removing permission from this level');
+      this.dataService.removeAppFromLevel(id).subscribe(sc => {
+        console.log(sc);
+        this.getAndSetData();
+      });
+    } else {
+      console.log('Canceled remove action');
+    }
+
+  }
+
+
+  updateLevelPermission(permissionId: string) {
+
+
+    this.dataService.getLevelAppPermissionData(permissionId).subscribe(sc => {
+
+      const levelAppPermissionData: any = sc;
+
+      const appPermission = {
+        permissionId: levelAppPermissionData.permissionId,
+        appId: levelAppPermissionData.appId,
+        levelId: levelAppPermissionData.levelId,
+        title: levelAppPermissionData.title,
+        description: levelAppPermissionData.description,
+        appName: levelAppPermissionData.appName,
+        url: levelAppPermissionData.url,
+        sessAryName: levelAppPermissionData.sessAryName,
+        remark: levelAppPermissionData.remark,
+        accessList: levelAppPermissionData.accessList
+      }
+
+      const dialogRef = this.dialog.open(DialogChangeLevelAppPermissionComponent, {
+        width: '600px',
+        panelClass: 'userViewModal',
+        data: appPermission
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log('Updating level permission');
+
+          // console.log(result);
+          this.dataService.udateLevelAppPermissionData(result).subscribe(sc => {
+            console.log(sc);
+            this.snackBar.open('App permission updated for this level', 'ok', {
+              duration: 2000,
+              horizontalPosition: 'right'
+            });
+          });
+
+        } else {
+          console.log('Dialog canceled');
+        }
+      });
+
+    });
+
+  }
+
   private _filter(value: string): App[] {
     const filterValue = value.toLowerCase();
 
-    return this.allAppList.filter(anApp => anApp.appName.toLowerCase().includes(filterValue));
+    return this.remainingAppListToAdd.filter(anApp => anApp.appName.toLowerCase().includes(filterValue));
   }
 
 }

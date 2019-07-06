@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {DataService} from '../../services/data.service';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
@@ -30,6 +30,7 @@ export class ManageLevelComponent implements OnInit {
     private router: Router,
     private location: Location,
     public dialog: MatDialog,
+    public snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -95,6 +96,10 @@ export class ManageLevelComponent implements OnInit {
         this.dataService.createNewLevel(result).subscribe(sc => {
           console.log(sc);
           this.getAllLevels();
+          this.snackBar.open('New user level added', 'OK', {
+            duration: 3000,
+            horizontalPosition: 'left'
+          });
         });
       } else {
         console.log('Dialog canceled');
@@ -127,6 +132,10 @@ export class ManageLevelComponent implements OnInit {
         this.dataService.editLevel(pdt).subscribe(sc => {
           console.log(sc);
           this.getAllLevels();
+          this.snackBar.open('Update successful!', 'OK', {
+            duration: 3000,
+            horizontalPosition: 'left'
+          });
         });
       } else {
         console.log('Dialog canceled');

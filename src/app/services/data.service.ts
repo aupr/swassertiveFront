@@ -80,6 +80,18 @@ export class DataService {
     return this.http.post(this.gs.apiServerStaticUrl + 'base/levelapp', pdt);
   }
 
+  removeAppFromLevel(id: string){
+    return this.http.delete(this.gs.apiServerStaticUrl + 'base/levelapp&id=' + id);
+  }
+
+  getLevelAppPermissionData(id: string) {
+    return this.http.get(this.gs.apiServerStaticUrl + 'base/permission&id=' + id);
+  }
+
+  udateLevelAppPermissionData(pdt: any) {
+    return this.http.put(this.gs.apiServerStaticUrl + 'base/permission', pdt);
+  }
+
   isUsernameAvailable(un: string): Observable<any> {
     const pdt = {
       username: un

@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>User Level: <strong>{{prmData.title}}</strong></h1>
+<div mat-dialog-content>
+  <h3 mat-dialog-title>App Name: <strong>{{prmData.appName}}</strong></h3>
+  <div>
+    <div *ngFor="let access of prmData.accessList" style="padding: 10px;">
+      <mat-slide-toggle [(ngModel)]="access.val">{{ access.definition }}</mat-slide-toggle>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-flat-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button [mat-dialog-close]="prmData">Save</button>
+</div>

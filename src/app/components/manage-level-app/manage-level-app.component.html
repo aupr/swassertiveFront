@@ -4,16 +4,30 @@
   <div *ngIf="permittedAppList">
 
     <mat-toolbar style="justify-content: space-between">
-      <div matTooltip="{{permittedAppList.description}}" matTooltipPosition="after">
-        {{permittedAppList.title}} [ID: {{ permittedAppList.levelId }}]
+
+
+      <div>
+        <button mat-flat-button style="background: #f5f5f5;"
+                (click)="location.back()"
+                matTooltipPosition="after"
+                matTooltip="Go back to the previous page">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <span matTooltip="{{permittedAppList.description}}" matTooltipPosition="after">
+          {{permittedAppList.title}} [ID: {{ permittedAppList.levelId }}]
+        </span>
+
       </div>
       <div>
 
-        <mat-form-field *ngIf="allAppList" style="width: 300px;" floatLabel="never">
+        <mat-form-field *ngIf="remainingAppListToAdd" style="width: 300px;" floatLabel="never">
           <input type="text" placeholder="Pick one to add" aria-label="Number" matInput [formControl]="appPickControl" [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete">
             <mat-option (click)="setOption(option.appId)" *ngFor="let option of filteredOptions | async" [value]="option.appName">
               {{option.appName}}
+            </mat-option>
+            <mat-option disabled="true" *ngIf="!remainingAppListToAdd.length" style="padding: 10px;">
+              No Apps remaining to add
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
@@ -29,8 +43,8 @@
           <mat-card-title>{{ app.appName }} [ID: {{ app.appId }}]</mat-card-title>
           <mat-card-subtitle>Permission Id: {{ app.permissionId }}</mat-card-subtitle>
           <div>
-            <button mat-flat-button color="accent" style="margin-right: 10px;"><mat-icon>playlist_add_check</mat-icon></button>
-            <button mat-flat-button color="warn"><mat-icon>delete</mat-icon></button>
+            <button mat-flat-button color="accent" (click)="updateLevelPermission(app.permissionId)" style="margin-right: 10px;"><mat-icon>playlist_add_check</mat-icon></button>
+            <button mat-flat-button color="warn" (click)="removeAppFromThisLevel(app.permissionId)"><mat-icon>delete</mat-icon></button>
           </div>
         </mat-card-header>
       </mat-card>

@@ -16,7 +16,7 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule, MatNativeDateModule, MatPaginatorModule,
-  MatProgressBarModule, MatSelectModule, MatSlideToggleModule, MatSortModule, MatTableModule,
+  MatProgressBarModule, MatSelectModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule
@@ -32,6 +32,7 @@ import { EditAppComponent } from './components/edit-app/edit-app.component';
 import { ManageLevelComponent } from './components/manage-level/manage-level.component';
 import { DialogAddLevelComponent } from './dialog/dialog-add-level/dialog-add-level.component';
 import { ManageLevelAppComponent } from './components/manage-level-app/manage-level-app.component';
+import { DialogChangeLevelAppPermissionComponent } from './dialog/dialog-change-level-app-permission/dialog-change-level-app-permission.component';
 
 @NgModule({
   declarations: [
@@ -48,11 +49,13 @@ import { ManageLevelAppComponent } from './components/manage-level-app/manage-le
     EditAppComponent,
     ManageLevelComponent,
     DialogAddLevelComponent,
-    ManageLevelAppComponent
+    ManageLevelAppComponent,
+    DialogChangeLevelAppPermissionComponent
   ],
   entryComponents: [
     DialogUserViewComponent,
-    DialogAddLevelComponent
+    DialogAddLevelComponent,
+    DialogChangeLevelAppPermissionComponent
   ],
   imports: [
     BrowserModule,
@@ -75,6 +78,7 @@ import { ManageLevelAppComponent } from './components/manage-level-app/manage-le
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
+    MatSnackBarModule,
     MatSelectModule,
     ReactiveFormsModule,
     MatDatepickerModule,
