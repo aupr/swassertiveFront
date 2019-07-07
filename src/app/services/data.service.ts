@@ -28,6 +28,19 @@ export class DataService {
     );
   }
 
+
+  getUserById(id: string): Observable<any> {
+    return this.http.get(this.gs.apiServerStaticUrl + 'base/user&id=' + id).pipe(
+      catchError(err => {
+        if (err.status === 401) {
+          console.error('authentication denied!');
+          this.router.navigate(['/badrequest']);
+        }
+        return of(false);
+      })
+    );
+  }
+
   getAllApps(): Observable<any> {
     return this.http.get(this.gs.apiServerStaticUrl + 'base/app').pipe(
       catchError(err => {

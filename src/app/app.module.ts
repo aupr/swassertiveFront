@@ -33,6 +33,7 @@ import { ManageLevelComponent } from './components/manage-level/manage-level.com
 import { DialogAddLevelComponent } from './dialog/dialog-add-level/dialog-add-level.component';
 import { ManageLevelAppComponent } from './components/manage-level-app/manage-level-app.component';
 import { DialogChangeLevelAppPermissionComponent } from './dialog/dialog-change-level-app-permission/dialog-change-level-app-permission.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { DialogChangeLevelAppPermissionComponent } from './dialog/dialog-change-
     ManageLevelComponent,
     DialogAddLevelComponent,
     ManageLevelAppComponent,
-    DialogChangeLevelAppPermissionComponent
+    DialogChangeLevelAppPermissionComponent,
+    EditUserComponent
   ],
   entryComponents: [
     DialogUserViewComponent,

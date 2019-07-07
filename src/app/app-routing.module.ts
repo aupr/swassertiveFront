@@ -11,12 +11,14 @@ import {AddAppComponent} from './components/add-app/add-app.component';
 import {EditAppComponent} from './components/edit-app/edit-app.component';
 import {ManageLevelComponent} from './components/manage-level/manage-level.component';
 import {ManageLevelAppComponent} from './components/manage-level-app/manage-level-app.component';
+import {EditUserComponent} from './components/edit-user/edit-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'manage/user', component: ManageUserComponent, canActivate: [AuthGuard] },
   { path: 'manage/user/add', component: AddUserComponent, canActivate: [AuthGuard] },
+  { path: 'manage/user/edit/:id', component: EditUserComponent, canActivate: [AuthGuard] },
   { path: 'manage/app', component: ManageAppComponent, canActivate: [AuthGuard] },
   { path: 'manage/app/add', component: AddAppComponent, canActivate: [AuthGuard] },
   { path: 'manage/app/edit/:id', component: EditAppComponent, canActivate: [AuthGuard] },
