@@ -15,6 +15,7 @@ export class DialogUserViewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.data);
   }
 
   onNoClick(): void {

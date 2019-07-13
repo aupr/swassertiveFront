@@ -41,6 +41,42 @@ export class DataService {
     );
   }
 
+  getPrimeAccessByUserId(id: string): Observable<any> {
+    return this.http.get(this.gs.apiServerStaticUrl + 'base/primeaccess&id=' + id).pipe(
+      catchError(err => {
+        if (err.status === 401) {
+          console.error('authentication denied!');
+          this.router.navigate(['/badrequest']);
+        }
+        return of(false);
+      })
+    );
+  }
+
+  setPrimeAccessByUserId(id: string, accessData: any): Observable<any> {
+    return this.http.put(this.gs.apiServerStaticUrl + 'base/primeaccess&id=' + id, accessData).pipe(
+      catchError(err => {
+        if (err.status === 401) {
+          console.error('authentication denied!');
+          this.router.navigate(['/badrequest']);
+        }
+        return of(false);
+      })
+    );
+  }
+
+  updateUser(user: any): Observable<any> {
+    return this.http.put(this.gs.apiServerStaticUrl + 'base/user', user).pipe(
+      catchError(err => {
+        if (err.status === 401) {
+          console.error('authentication denied!');
+          this.router.navigate(['/badrequest']);
+        }
+        return of(false);
+      })
+    );
+  }
+
   getAllApps(): Observable<any> {
     return this.http.get(this.gs.apiServerStaticUrl + 'base/app').pipe(
       catchError(err => {

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DataService} from '../../services/data.service';
 import {GlobalService} from '../../services/global.service';
-import {CustomValidator} from '../../services/custom.validator';
 import {Location} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
+
 
 @Component({
   selector: 'app-edit-user',
@@ -13,8 +13,9 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class EditUserComponent implements OnInit {
   hide = true;
-  newUser: FormGroup;
+  formData: FormGroup;
   userLevels: any;
+  primeUserData: any;
 
   constructor(
     private fb: FormBuilder,
@@ -29,18 +30,53 @@ export class EditUserComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       this.dataService.getUserById(params.get('id')).subscribe(userRtSc => {
 
-
-
+        this.primeUserData = userRtSc;
 
         this.dataService.getAllLevels().subscribe(sc => {
           this.userLevels = sc;
           console.log(sc);
-          this.buildForm(userRtSc);
+          this.buildForm();
 
-          // console.log(this.newUser);
+          // making array data
+          const userEmails = this.fb.array([]);
+          userRtSc.emails.forEach(email => {
+            userEmails.push(this.fb.group({
+              emailId: email.emailId,
+              emailType: email.emailType,
+              email: email.email
+            }));
+          });
+          const userPhones = this.fb.array([]);
+          userRtSc.phones.forEach(phone => {
+            userPhones.push(this.fb.group({
+              phoneId: phone.phoneId,
+              phoneType: phone.phoneType,
+              number: phone.number
+            }));
+          });
 
-          /*this.newUser.valueChanges.subscribe(val => {
-            console.log(this.newUser);
+
+
+          // console.log(userRtSc);
+          this.formData.patchValue({
+            name: userRtSc.name,
+            username: userRtSc.username,
+            dob: new Date(Number(userRtSc.dob) * 1000),
+            userLevelId: userRtSc.userLevel.levelId.toString(),
+            gender: userRtSc.gender,
+            religion: userRtSc.religion,
+            bloodGroup: userRtSc.bloodgroup,
+            address: userRtSc.address,
+            dgnTitle: userRtSc.designations[0].title,
+            dgnFromDate: new Date(Number(userRtSc.designations[0].fromTime) * 1000),
+          });
+          this.formData.setControl('emails', userEmails);
+          this.formData.setControl('phones', userPhones);
+
+          // console.log(this.formData);
+
+          /*this.formData.valueChanges.subscribe(val => {
+            console.log(this.formData);
             console.log((val.dgnFromDate as Date).getTime());
             console.log((val.dgnFromDate));
           });*/
@@ -52,23 +88,23 @@ export class EditUserComponent implements OnInit {
 
   }
 
-  buildForm(user: any) {
-    this.newUser = this.fb.group({
-      name: [user.name, [Validators.required, Validators.pattern('^[A-Z a-z.-]{3,30}$')]],
-      username: [user.username, [
+  buildForm() {
+    this.formData = this.fb.group({
+      name: ['', [Validators.required, Validators.pattern('^[A-Z a-z.-]{3,30}$')]],
+      username: ['', [
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(20),
         Validators.pattern('^[a-z0-9]+$')
-      ], CustomValidator.uniqueUsername(this.dataService)],
-      dob: [new Date(Number(user.dob) * 1000), Validators.required],
-      userLevelId: [user.userLevel.levelId.toString(), Validators.required],
-      gender: [user.gender],
-      religion: [user.religion],
-      bloodGroup: [user.bloodgroup],
-      address: [user.address],
-      dgnTitle: [user.designations[0].title, Validators.required],
-      dgnFromDate: [new Date(Number(user.designations[0].fromTime) * 1000), Validators.required],
+      ]],
+      dob: ['', Validators.required],
+      userLevelId: ['', Validators.required],
+      gender: [''],
+      religion: [''],
+      bloodGroup: [''],
+      address: [''],
+      dgnTitle: ['', Validators.required],
+      dgnFromDate: ['', Validators.required],
 
       emails: this.fb.array([
         this.makeEmailGroup()
@@ -83,22 +119,22 @@ export class EditUserComponent implements OnInit {
 
   mapUserData(data: any): any {
     const aUser = {
-      userId: null,
+      userId: this.primeUserData.userId,
       name: data.name,
       dob: (Math.trunc(data.dob.getTime() / 1000)).toString(),
       username: data.username,
-      password: data.password,
       gender: data.gender,
       religion: data.religion,
-      bloodGroup: data.bloodGroup,
+      bloodgroup: data.bloodGroup,
       address: data.address,
-      joinTime: (Math.trunc((new Date().getTime()) / 1000)).toString(),
+      jointime: (Math.trunc((new Date().getTime()) / 1000)).toString(),
       userLevelId: data.userLevelId,
       blocked: '0',
       phones: data.phones,
       emails: data.emails,
       designations: [
         {
+          dgnId: null,
           fromTime: (Math.trunc(data.dgnFromDate.getTime() / 1000)).toString(),
           toTime: '0',
           title: data.dgnTitle
@@ -110,12 +146,14 @@ export class EditUserComponent implements OnInit {
   }
 
 
-  addNewUser() {
+  updateUser() {
     this.gs.isLoading = true;
-    // console.log(this.mapUserData(this.newUser.value));
-    this.dataService.createNewUser(this.mapUserData(this.newUser.value)).subscribe(sc => {
+    // console.log(this.mapUserData(this.formData.value));
+    console.log('updating user data');
+    this.dataService.updateUser(this.mapUserData(this.formData.value)).subscribe(sc => {
       console.log(sc);
       this.gs.isLoading = false;
+      this.location.back();
     });
   }
 
@@ -123,28 +161,30 @@ export class EditUserComponent implements OnInit {
 
   makeEmailGroup(): FormGroup {
     return this.fb.group({
+      emailId: null,
       emailType: ['Work'],
       email: ['', [Validators.required, Validators.email]]
     });
   }
   addEmailGroup() {
-    (this.newUser.get('emails') as FormArray).push(this.makeEmailGroup());
+    (this.formData.get('emails') as FormArray).push(this.makeEmailGroup());
   }
   removeEmailGroup(groupIndexNumber: number) {
-    (this.newUser.get('emails') as FormArray).removeAt(groupIndexNumber);
+    (this.formData.get('emails') as FormArray).removeAt(groupIndexNumber);
   }
 
   makePhoneGroup(): FormGroup {
     return this.fb.group({
+      phoneId: null,
       phoneType: ['Work'],
       number: ['', Validators.required]
     });
   }
   addPhoneGroup() {
-    (this.newUser.get('phones') as FormArray).push(this.makePhoneGroup());
+    (this.formData.get('phones') as FormArray).push(this.makePhoneGroup());
   }
   removePhoneGroup(groupIndexNumber: number) {
-    (this.newUser.get('phones') as FormArray).removeAt(groupIndexNumber);
+    (this.formData.get('phones') as FormArray).removeAt(groupIndexNumber);
   }
 
 }

@@ -12,6 +12,7 @@ import {EditAppComponent} from './components/edit-app/edit-app.component';
 import {ManageLevelComponent} from './components/manage-level/manage-level.component';
 import {ManageLevelAppComponent} from './components/manage-level-app/manage-level-app.component';
 import {EditUserComponent} from './components/edit-user/edit-user.component';
+import {PrimeAccessComponent} from './components/prime-access/prime-access.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'manage/app/edit/:id', component: EditAppComponent, canActivate: [AuthGuard] },
   { path: 'manage/level', component: ManageLevelComponent, canActivate: [AuthGuard] },
   { path: 'manage/level/apps/:id', component: ManageLevelAppComponent, canActivate: [AuthGuard] },
+  { path: 'manage/prime/access', component: PrimeAccessComponent, canActivate: [AuthGuard] },
   { path: 'signin', component: SignInComponent },
   { path: 'badrequest', component: BadRequestComponent }
 ];

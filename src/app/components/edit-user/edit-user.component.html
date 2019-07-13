@@ -11,26 +11,26 @@
     Edit User
   </mat-toolbar>
   <div style="background-color: #fbfbfb; padding: 50px;">
-    <form *ngIf="userLevels" [formGroup]="newUser" (submit)="addNewUser()" autocomplete="false">
+    <form *ngIf="userLevels" [formGroup]="formData" (submit)="updateUser()" autocomplete="false">
 
       <!--Full name field-->
       <mat-form-field>
         <mat-label>Full name</mat-label>
         <input matInput formControlName="name" placeholder="Enter full name" required>
-        <mat-error *ngIf="newUser.get('name').errors?.required">Required Field</mat-error>
-        <mat-error *ngIf="newUser.get('name').errors?.pattern">3 to 30 character A-Z a-z . - are supported.</mat-error>
+        <mat-error *ngIf="formData.get('name').errors?.required">Required Field</mat-error>
+        <mat-error *ngIf="formData.get('name').errors?.pattern">3 to 30 character A-Z a-z . - are supported.</mat-error>
       </mat-form-field>
 
       <!--Username field-->
       <mat-form-field>
         <mat-label>Username</mat-label>
         <input matInput formControlName="username" #userNameTag placeholder="Enter username without space" required>
-        <mat-error *ngIf="newUser.get('username').errors?.required">Required Field</mat-error>
-        <mat-error *ngIf="newUser.get('username').errors?.pattern">Small later, digit with no space supported</mat-error>
-        <mat-error *ngIf="newUser.get('username').errors?.minlength">Minimum length should be 4</mat-error>
-        <mat-error *ngIf="newUser.get('username').errors?.maxlength">Maximum allowed length 20</mat-error>
-        <mat-error *ngIf="newUser.get('username').errors?.uniqueUsername">This name is not available</mat-error>
-        <mat-hint *ngIf="newUser.get('username').pending" align="start">Checking availability...</mat-hint>
+        <mat-error *ngIf="formData.get('username').errors?.required">Required Field</mat-error>
+        <mat-error *ngIf="formData.get('username').errors?.pattern">Small later, digit with no space supported</mat-error>
+        <mat-error *ngIf="formData.get('username').errors?.minlength">Minimum length should be 4</mat-error>
+        <mat-error *ngIf="formData.get('username').errors?.maxlength">Maximum allowed length 20</mat-error>
+        <mat-error *ngIf="formData.get('username').errors?.uniqueUsername">This name is not available</mat-error>
+        <mat-hint *ngIf="formData.get('username').pending" align="start">Checking availability...</mat-hint>
         <mat-hint align="end">{{userNameTag.value.length}} / 20</mat-hint>
       </mat-form-field>
 
@@ -46,8 +46,8 @@
 
       <!--Add email section-->
       <div style="border: 1px solid silver; padding: 10px;">
-        <div formArrayName="emails" *ngFor="let email of newUser.controls.emails.controls; let i = index">
-          <!--<hr *ngIf="newUser.value.emails.length>1">-->
+        <div formArrayName="emails" *ngFor="let email of formData.controls.emails.controls; let i = index">
+          <!--<hr *ngIf="formData.value.emails.length>1">-->
           <div formGroupName="{{ i }}" style="background-color: #f7f7f7; padding: 10px;">
             <mat-form-field style="width: 100px;">
               <mat-label>Email Type</mat-label>
@@ -67,7 +67,7 @@
             </mat-form-field>
 
             <button mat-icon-button
-                    *ngIf="newUser.value.emails.length>1"
+                    *ngIf="formData.value.emails.length>1"
                     color="warn"
                     (click)="removeEmailGroup(i)">
               <mat-icon>clear</mat-icon>
@@ -75,12 +75,12 @@
           </div>
         </div>
         <span>Add another email address</span>
-        <button mat-icon-button [disabled]="newUser.get('emails').invalid" (click)="addEmailGroup()" color="accent"><mat-icon>add_circle</mat-icon></button>
+        <button mat-icon-button [disabled]="formData.get('emails').invalid" (click)="addEmailGroup()" color="accent"><mat-icon>add_circle</mat-icon></button>
       </div>
 
       <!--Add phone number section-->
       <div style="border: 1px solid silver; padding: 10px; margin-top: 20px;">
-        <div formArrayName="phones" *ngFor="let phone of newUser.get('phones').controls; let i = index">
+        <div formArrayName="phones" *ngFor="let phone of formData.get('phones').controls; let i = index">
 
           <div [formGroupName]="i" style="background-color: #f7f7f7; padding: 10px;">
             <mat-form-field style="width: 100px;">
@@ -99,11 +99,11 @@
               <mat-error>Required Field</mat-error>
             </mat-form-field>
 
-            <button mat-icon-button (click)="removePhoneGroup(i)" *ngIf="newUser.value.phones.length>1" color="warn"><mat-icon>clear</mat-icon></button>
+            <button mat-icon-button (click)="removePhoneGroup(i)" *ngIf="formData.value.phones.length>1" color="warn"><mat-icon>clear</mat-icon></button>
           </div>
         </div>
         <span>Add another phone number</span>
-        <button mat-icon-button [disabled]="newUser.get('phones').invalid" (click)="addPhoneGroup()" color="accent"><mat-icon>add_circle</mat-icon></button>
+        <button mat-icon-button [disabled]="formData.get('phones').invalid" (click)="addPhoneGroup()" color="accent"><mat-icon>add_circle</mat-icon></button>
       </div >
 
       <!--Date of birth section-->
@@ -186,7 +186,7 @@
       </mat-form-field>
 
       <div style="margin-top: 20px;" align="end">
-        <button mat-raised-button color="primary" type="submit" [disabled]="newUser.invalid"><mat-icon>save</mat-icon> Save</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="formData.invalid"><mat-icon>save</mat-icon> Save</button>
       </div>
 
     </form>

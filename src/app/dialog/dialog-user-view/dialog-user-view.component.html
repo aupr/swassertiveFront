@@ -1,17 +1,19 @@
 <h1 mat-dialog-title>{{data.name}}</h1>
-<h3 mat-dialog-title>{{data.username}}</h3>
 <div mat-dialog-content>
+  <i>{{data.username}}</i>
+  <h5>{{data.designations[0].title}}</h5>
+  <p>Blood Group: {{data.bloodgroup}}</p>
+  <p>Religion: {{data.religion}}</p>
 
-  <div>Phone:
-    <div *ngFor="let phone of data.phones">{{phone.number}}</div>
+  <div style="padding: 20px; background: #f5f5f5;">Phone:
+    <div style="padding: 5px;" *ngFor="let phone of data.phones">{{phone.phoneType}}: {{phone.number}}</div>
   </div>
 
-  <div>E-mail:
-    <div *ngFor="let email of data.emails">{{email.email}}</div>
+  <div style="padding: 20px; background: #f5f5f5;">E-mail:
+    <div style="padding: 5px;" *ngFor="let email of data.emails">{{email.emailType}}: {{email.email}}</div>
   </div>
 
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="outputData" cdkFocusInitial>Ok</button>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button (click)="onNoClick()">Close</button>
 </div>

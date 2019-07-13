@@ -24,15 +24,15 @@ export class AddUserComponent implements OnInit {
   ngOnInit() {
     this.dataService.getAllLevels().subscribe(sc => {
       this.userLevels = sc;
-      console.log(sc);
+      // console.log(sc);
       this.buildForm();
 
-      console.log(this.newUser);
-      this.newUser.valueChanges.subscribe(val => {
+      // console.log(this.newUser);
+      /*this.newUser.valueChanges.subscribe(val => {
         console.log(this.newUser);
         console.log((val.dgnFromDate as Date).getTime());
         console.log((val.dgnFromDate));
-      });
+      });*/
 
 
     });
@@ -100,6 +100,7 @@ export class AddUserComponent implements OnInit {
     this.dataService.createNewUser(this.mapUserData(this.newUser.value)).subscribe(sc => {
       console.log(sc);
       this.gs.isLoading = false;
+      this.location.back();
     });
   }
 
