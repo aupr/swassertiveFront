@@ -36,6 +36,7 @@ import { DialogChangeLevelAppPermissionComponent } from './dialog/dialog-change-
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { PrimeAccessComponent } from './components/prime-access/prime-access.component';
 import { DialogPrimeAccessComponent } from './dialog/dialog-prime-access/dialog-prime-access.component';
+import { DialogChangePasswordComponent } from './dialog/dialog-change-password/dialog-change-password.component';
 
 @NgModule({
   declarations: [
@@ -56,13 +57,15 @@ import { DialogPrimeAccessComponent } from './dialog/dialog-prime-access/dialog-
     DialogChangeLevelAppPermissionComponent,
     EditUserComponent,
     PrimeAccessComponent,
-    DialogPrimeAccessComponent
+    DialogPrimeAccessComponent,
+    DialogChangePasswordComponent
   ],
   entryComponents: [
     DialogUserViewComponent,
     DialogAddLevelComponent,
     DialogChangeLevelAppPermissionComponent,
-    DialogPrimeAccessComponent
+    DialogPrimeAccessComponent,
+    DialogChangePasswordComponent
   ],
   imports: [
     BrowserModule,

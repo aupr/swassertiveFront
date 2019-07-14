@@ -3,12 +3,6 @@
 <mat-tab-group *ngIf="gs.userData">
   <mat-tab label="App List">
 
-    <button mat-raised-button color="primary" (click)="router.navigate(['/manage/user'])">Users</button>
-    <button mat-raised-button color="primary" (click)="router.navigate(['/manage/app'])">Applications</button>
-    <button mat-raised-button color="primary" (click)="router.navigate(['/manage/level'])">Levels</button>
-    <button mat-raised-button color="primary" (click)="router.navigate(['/manage/prime/access'])">Prime access control</button>
-    <button mat-raised-button color="primary">Change password</button>
-
     <mat-card class="apps-card">
       <mat-card-header>
         <mat-card-title>User apps list</mat-card-title>
@@ -30,6 +24,22 @@
 
   </mat-tab>
   <mat-tab label="Options">
+
+    <mat-card style="width: 400px; margin: 10px;">
+      <mat-card-header>
+        <mat-card-title>User Options</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <button mat-raised-button color="warn" (click)="router.navigate(['/manage/user'])">Users</button>
+        <button mat-raised-button color="warn" (click)="router.navigate(['/manage/app'])">Applications</button>
+        <button mat-raised-button color="warn" (click)="router.navigate(['/manage/level'])">User Levels</button>
+        <button mat-raised-button color="warn" (click)="router.navigate(['/manage/prime/access'])">Prime access control</button>
+        <button mat-raised-button color="warn" (click)="changePassword()">Change password</button>
+
+      </mat-card-content>
+    </mat-card>
 
   </mat-tab>
 </mat-tab-group>

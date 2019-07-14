@@ -22,6 +22,7 @@ export class NavigationComponent implements OnInit {
     // if user data is not present in the global service then fetch it and store to the global service
     if (!this.gs.userData) {
       this.authService.getUserData().subscribe(user => {
+        // console.log(user);
         this.gs.userData = user;
         this.navBarData = this.gs.userData;
       });
