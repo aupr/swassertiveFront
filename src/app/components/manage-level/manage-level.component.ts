@@ -25,13 +25,12 @@ export class ManageLevelComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(
-    private dataService: DataService,
-    private router: Router,
-    private location: Location,
-    public dialog: MatDialog,
-    public snackBar: MatSnackBar
-  ) {}
+  constructor(private dataService: DataService,
+              private router: Router,
+              private location: Location,
+              public dialog: MatDialog,
+              public snackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
     this.getAllLevels();

@@ -158,7 +158,6 @@ export class EditUserComponent implements OnInit {
   }
 
 
-
   makeEmailGroup(): FormGroup {
     return this.fb.group({
       emailId: null,
