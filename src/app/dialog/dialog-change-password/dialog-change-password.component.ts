@@ -7,7 +7,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
   styleUrls: ['./dialog-change-password.component.scss']
 })
 export class DialogChangePasswordComponent implements OnInit {
-
+  primeAccess;
   hidex = true;
   hide = true;
 

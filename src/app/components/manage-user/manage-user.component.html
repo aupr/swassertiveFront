@@ -17,6 +17,7 @@
       </mat-form-field>
 
       <button mat-mini-fab
+              *ngIf="gs.userData.primeAccess.addNewUser"
               matTooltipPosition="before"
               matTooltip="Add new user"
               style="margin-left: 50px;" color="accent"
@@ -80,8 +81,17 @@
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button matTooltip="Detail view" matTooltipPosition="before" color="accent" (click)="openDialog(element.userId)"><mat-icon>launch</mat-icon></button>
-        <button mat-icon-button matTooltip="Edit" (click)="router.navigate(['/manage/user/edit/', element.userId])" matTooltipPosition="before" color="warn"><mat-icon>edit</mat-icon></button>
-        <button mat-icon-button matTooltip="Change password" matTooltipPosition="before" color="warn"><mat-icon>vpn_key</mat-icon></button>
+        <button mat-icon-button
+                *ngIf="gs.userData.primeAccess.editUser"
+                matTooltip="Edit"
+                (click)="router.navigate(['/manage/user/edit/', element.userId])"
+                matTooltipPosition="before"
+                color="warn"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button
+                *ngIf="gs.userData.primeAccess.assignNewUserPass"
+                matTooltip="Change password"
+                matTooltipPosition="before"
+                color="warn"><mat-icon>vpn_key</mat-icon></button>
       </td>
     </ng-container>
 

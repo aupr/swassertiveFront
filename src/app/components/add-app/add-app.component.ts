@@ -17,9 +17,13 @@ export class AddAppComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dataService: DataService,
-    private location: Location,
-    private gs: GlobalService
-  ) { }
+    public location: Location,
+    public gs: GlobalService
+  ) {
+    if (!this.gs.userData.primeAccess.applicationManage) {
+      this.location.back();
+    }
+  }
 
   ngOnInit() {
     this.buildForm();

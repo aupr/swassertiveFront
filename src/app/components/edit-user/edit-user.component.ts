@@ -20,10 +20,14 @@ export class EditUserComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dataService: DataService,
-    private location: Location,
-    private gs: GlobalService,
+    public location: Location,
+    public gs: GlobalService,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+    if (!this.gs.userData.primeAccess.editUser){
+      this.location.back();
+    }
+  }
 
   ngOnInit() {
 

@@ -7,6 +7,7 @@ import {map, startWith} from 'rxjs/internal/operators';
 import {Location} from '@angular/common';
 import {DialogChangeLevelAppPermissionComponent} from '../../dialog/dialog-change-level-app-permission/dialog-change-level-app-permission.component';
 import {MatDialog, MatSnackBar} from '@angular/material';
+import {GlobalService} from "../../services/global.service";
 
 export interface App {
   appId: string;
@@ -33,8 +34,13 @@ export class ManageLevelAppComponent implements OnInit {
     private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute,
     private dataService: DataService,
-    private location: Location
-  ) { }
+    private location: Location,
+    private gs: GlobalService
+  ) {
+    if(!this.gs.userData.primeAccess.userLevelManage) {
+      this.location.back();
+    }
+  }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {

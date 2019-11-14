@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {DialogUserViewComponent} from '../../dialog/dialog-user-view/dialog-user-view.component';
 import {Location} from '@angular/common';
 import {DialogPrimeAccessComponent} from '../../dialog/dialog-prime-access/dialog-prime-access.component';
+import {GlobalService} from "../../services/global.service";
 
 export interface User {
   userId: string;
@@ -34,8 +35,13 @@ export class PrimeAccessComponent implements OnInit {
     private dataService: DataService,
     private router: Router,
     public dialog: MatDialog,
-    public location: Location
-  ) {}
+    public location: Location,
+    public gs: GlobalService
+  ) {
+    if (!this.gs.userData.primeAccess.primeAccessControl) {
+      this.location.back();
+    }
+  }
 
   ngOnInit() {
     this.getAllUsers();

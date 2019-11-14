@@ -4,6 +4,7 @@ import {DataService} from '../../services/data.service';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {DialogAddLevelComponent} from '../../dialog/dialog-add-level/dialog-add-level.component';
+import {GlobalService} from "../../services/global.service";
 
 export interface Level {
   levelId: string;
@@ -27,9 +28,13 @@ export class ManageLevelComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private router: Router,
-              private location: Location,
+              public location: Location,
               public dialog: MatDialog,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              public gs: GlobalService) {
+    if(!this.gs.userData.primeAccess.userLevelManage){
+      this.location.back();
+    }
   }
 
   ngOnInit() {

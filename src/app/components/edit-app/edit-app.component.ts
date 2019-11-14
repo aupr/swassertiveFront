@@ -16,11 +16,11 @@ export class EditAppComponent implements OnInit {
   editApp: FormGroup;
 
   constructor(
-    private gs: GlobalService,
+    public gs: GlobalService,
     private fb: FormBuilder,
     private dataService: DataService,
     private activatedRoute: ActivatedRoute,
-    private location: Location
+    public location: Location
   ) { }
 
   ngOnInit() {

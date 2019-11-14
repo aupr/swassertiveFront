@@ -4,6 +4,7 @@ import {DataService} from '../../services/data.service';
 import {CustomValidator} from '../../services/custom.validator';
 import {Location} from '@angular/common';
 import {GlobalService} from '../../services/global.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-user',
@@ -17,11 +18,20 @@ export class AddUserComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private dataService: DataService,
-              private location: Location,
-              private gs: GlobalService
-  ) { }
+              public location: Location,
+              public gs: GlobalService,
+              private router: Router
+  ) {
+    if (!this.gs.userData.primeAccess.addNewUser) {
+      // this.router.navigate(['/']);
+      this.location.back();
+    }
+  }
 
   ngOnInit() {
+
+
+
     this.dataService.getAllLevels().subscribe(sc => {
       this.userLevels = sc;
       // console.log(sc);

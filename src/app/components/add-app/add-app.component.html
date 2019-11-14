@@ -44,7 +44,7 @@
 
 
       <div style="margin-top: 20px; padding: 10px; border: 1px solid silver;">
-        <div formArrayName="accesses" *ngFor="let access of newApp.get('accesses').controls; let i = index"
+        <div formArrayName="accesses" *ngFor="let access of newApp.get('accesses')['controls']; let i = index"
              style="padding: 10px; background-color: #f5f5f5; border-bottom: 1px solid silver;">
           <div [formGroupName]="i">
 

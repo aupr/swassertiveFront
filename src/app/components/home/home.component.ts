@@ -13,7 +13,7 @@ import {MatDialog} from '@angular/material';
 export class HomeComponent implements OnInit {
 
   constructor(
-    private gs: GlobalService,
+    public gs: GlobalService,
     private router: Router,
     private dialog: MatDialog
   ) { }

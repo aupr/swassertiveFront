@@ -3,6 +3,7 @@ import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/mat
 import {DataService} from '../../services/data.service';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {GlobalService} from "../../services/global.service";
 
 export interface App {
   appId: string;
@@ -28,10 +29,15 @@ export class ManageAppComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private router: Router,
-    private location: Location,
+    public router: Router,
+    public location: Location,
     public dialog: MatDialog,
-  ) {}
+    public gs: GlobalService
+  ) {
+    if (!this.gs.userData.primeAccess.applicationManage) {
+      this.location.back();
+    }
+  }
 
   ngOnInit() {
     this.getAllApps();
