@@ -13,7 +13,7 @@
 
           <mat-list-item *ngFor="let app of gs.userData.appList">
             <mat-icon mat-list-icon>touch_app</mat-icon>
-            <a href="#" mat-line>{{app.appName}}</a>
+            <a href="{{app.url}}" mat-line>{{app.appName}}</a>
             <p mat-line> {{app.remark}} </p>
           </mat-list-item>
 
